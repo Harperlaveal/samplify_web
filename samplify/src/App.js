@@ -1,6 +1,5 @@
 import { firebaseConfig } from './firebase.js';
 import { initializeApp } from 'firebase/app';
-import { getAuth } from "firebase/auth";
 
 export const app = initializeApp(firebaseConfig);
 
