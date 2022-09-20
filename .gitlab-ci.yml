@@ -8,6 +8,7 @@ stages:          # List of stages for jobs, and their order of execution
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
+    - cd ./samplify
     - npm ci
     - npm run build
   allow_failure: false
@@ -33,6 +34,7 @@ lint-test-job:   # This job also runs in the test stage.
 deploy-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
   script:
+    - cd ./samplify
     - npm i
     - npm run build
     - npm i -g firebase-tools
