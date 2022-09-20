@@ -8,6 +8,9 @@ build-job:       # This job runs in the build stage, which runs first.
   script:
     - npm ci
     - npm run build
+  allow_failure: false
+  tags:
+    - docker
 
 # unit-test-job:   # This job runs in the test stage.
 #   stage: test    # It only starts when the job in the build stage completes successfully.
@@ -21,6 +24,9 @@ lint-test-job:   # This job also runs in the test stage.
   script:
     - echo "Linting code... This will take about 10 seconds."
     - echo "No lint issues found."
+  allow_failure: false
+  tags:
+    - docker
 
 deploy-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
@@ -29,5 +35,9 @@ deploy-job:      # This job runs in the deploy stage.
     - npm run build
     - npm i -g firebase-tools
     - firebase deploy --only hosting -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token "$FIREBASE_TOKEN"
+  allow_failure: false
+  tags:
+    - docker
+
   only :
     - main
