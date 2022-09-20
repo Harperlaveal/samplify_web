@@ -9,6 +9,7 @@
   "author": "Gareth",
   "license": "ISC",
   "dependencies": {
+    "build": "^0.1.4",
     "firebase": "^9.10.0"
   }
 }
