@@ -1,5 +1,5 @@
 import { getAuth } from "firebase/auth";
-import { app } from "../../App.js";
+import { app } from "./App.js";
 
 /**
  * Set a cookie using the given name, value and expiry.
