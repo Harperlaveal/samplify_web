@@ -1,0 +1,33 @@
+<div class='container'>
+    <div class='form-group'>
+        <div class='search-row'>
+            <input id='artist'  class='search-input' placeholder='Search for artist' type="text">
+            <button type="search"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+
+    <table class='table table-bordered'>
+        <thead class='thead-light'>
+            <tr>
+                <th>Sample</th>
+                <th>Source</th>
+                <th>Used On</th>
+                <th>Select</th>
+            </tr>
+        </thead>
+        <div class='scrollable-body'>
+            <tbody id='samples'>
+
+            </tbody>
+        </div>
+    </table>
+
+    <div class='form-group'>
+        <select class="custom-select">
+            <option value="0">Choose Playlist</option>
+        </select>
+        <output id="playlist" for="playlist-to-add"></output>
+        <button id='add' class="btn btn-outline-success">Add to playlist</button>
+    </div>
+
+</div>
