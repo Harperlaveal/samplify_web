@@ -58,6 +58,11 @@ function displayPlaylist(pl){
     cell.innerText = pl['title'];
 }
 
+function createIcon(className,fn, id){
+    /* creates icons for selection */
+    
+}
+
 function displaySamples(){
     /* displays each sample in list*/
 }
