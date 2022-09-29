@@ -3,7 +3,6 @@
 window.addEventListener("load",init);
 
 function init(){
-    loadId();
     bindEvents();  
 }
 
