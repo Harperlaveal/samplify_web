@@ -7,11 +7,6 @@ function init(){
     bindEvents();  
 }
 
-function loadId(){
-    /* automatically sets value of playlist ID */
-
-}
-
 function bindEvents(){
     document.querySelector('#add-playlist').addEventListener('click',addPlaylist);
     document.querySelector('#delete-playlist').addEventListener('click',deletePlaylist);
