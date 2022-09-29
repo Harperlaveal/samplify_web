@@ -4,16 +4,30 @@ window.addEventListener("load",init);
 
 function init(){
     bindEvents();  
+    //loadPlaylists();
 }
 
 function bindEvents(){
-    document.querySelector('#add-playlist').addEventListener('click',addPlaylist);
-    document.querySelector('#delete-playlist').addEventListener('click',deletePlaylist);
-    document.querySelector('#edit-playlist').addEventListener('click',updatePlaylist);
+    document.querySelector('#add').addEventListener('click',addPlaylist);
+    document.querySelector('#delete').addEventListener('click',deletePlaylist);
+    document.querySelector('#edit').addEventListener('click',updatePlaylist);
 }
 
 function addPlaylist(){
     /* adds new playlist and re-displays list */
+    let pl = new Playlist();
+
+    let playname = document.getElementById('pl-in-txt').value;
+
+    if(playname!=''){
+        pl['title'] = document.getElementById('pl-in-txt').value;
+
+        playlistOperations.addPlaylist(pl);
+
+        displayPlaylist(pl);
+
+        document.getElementById('pl-in-txt').value = "";
+    }
 }
 
 function deletePlaylist(){
@@ -28,12 +42,20 @@ function deleteSample(){
     /* deletes sample and re-displays view */
 }
 
-function displayPlaylists(){
+function displayPlaylists(playlists){
     /* displays each playlist in list*/
+    document.querySelector('#pl-items').innerHTML = null; //first clears table
+    for(i = 0; i<playlists.length; i++){
+        displayPlaylist(playlists[i]);
+    }
 }
 
-function displayPlaylist(){
+function displayPlaylist(pl){
     /* displays playlist as clickable button*/
+    var tbody = document.querySelector('#pl-items');
+    var tr = tbody.insertRow();
+    let cell = tr.insertCell(0);
+    cell.innerText = pl['title'];
 }
 
 function displaySamples(){
@@ -51,29 +73,24 @@ function changeView(){
 
 // firebase
 
-import { getAuth } from "firebase/auth";
-import { app } from "./LoginController";
-import { collection, getDocs } from "firebase/firestore";
+// import { getAuth } from "firebase/auth";
+// import { app } from "./LoginController";
+// import { collection, getDocs } from "firebase/firestore";
 
-document.getElementById("Playlists").addEventListener("click", init);
+// document.getElementById("Playlists").addEventListener("click", init);
 
-function init(){
-    console.log("Playlists clicked");
-    loadPlaylists();
-}
+// function loadPlaylists() {
+//     playlists = getFromFireBase();
+//     document.getElementById("playlistContent").innerText = "test";
+// }
 
-function loadPlaylists() {
-    playlists = getFromFireBase();
-    document.getElementById("playlistContent").innerText = "test";
-}
+// async function getFromFireBase() {
+//     const querySnapshot = await getDocs(collection(getFirestore(app), "playlists"));
+//     let playlists = [];
+//     querySnapshot.forEach((doc) => {
+//         console.log(doc.id, " => ", doc.data());
+//         playlists.push(new Playlist(doc.data().title, doc.data().uid, doc.data().songs));
+//     });
 
-async function getFromFireBase() {
-    const querySnapshot = await getDocs(collection(getFirestore(app), "playlists"));
-    let playlists = [];
-    querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-        playlists.push(new Playlist(doc.data().title, doc.data().uid, doc.data().songs));
-    });
-
-    return playlists;
-}
+//     return playlists;
+// }

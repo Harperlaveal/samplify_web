@@ -46,7 +46,10 @@
   height: 300px;
   width: 300px;
   overflow-y: auto;
-  background-color: gainsboro;
+  overflow-x: hidden;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
 }
 
 .pl-input {
@@ -66,9 +69,13 @@
   margin: 25px;
   width: 100%;
   height: 300px;
-  background-color: gainsboro;
   display: flex;
   flex-direction: row;
+  background-color: white;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  border-radius: 10px;
 }
 
 .pl-name {
@@ -81,6 +88,10 @@
   color: black;
   font-size: 20px;
   font-weight: bold;
+  padding-left: 5px;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
 }
 
 
@@ -92,6 +103,10 @@
   color: black;
   font-size: 15px;
   overflow-y: auto;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  padding: 5px;
 }
 
 .pl-samples {
@@ -99,9 +114,12 @@
   width: 100%;
   background-color: white;
   margin: 25px;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
 }
 
-#edit-playlist {
+#edit {
   margin-left: 25px;
 }
 
