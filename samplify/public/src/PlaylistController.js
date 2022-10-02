@@ -78,10 +78,6 @@ function updatePlaylist(){
     updateOptions();
 }
 
-function deleteSample(){
-    /* deletes sample and re-displays view */
-}
-
 function displayPlaylists(){
     /* displays each playlist in list*/
     let lists = playlistOperations.getPlaylists();
@@ -125,11 +121,6 @@ function changeView(){
     displaySamples(pl);
 }
 
-function createIcon(className,fn, id){
-    /* creates icons for selection */
-    
-}
-
 function displaySamples(playlist){
     /* displays each sample in list*/
     document.querySelector('#pl-sample-table').innerHTML = null;
@@ -145,8 +136,38 @@ function displaySample(sample){
     var tbody = document.querySelector('#pl-sample-table');
     var tr = tbody.insertRow();
     tr.insertCell(0).innerText = sample['title'];
+    tr.insertCell(1).innerText = sample['artist'];
+    tr.insertCell(2).appendChild(createImage(sample['imgUrl']));
+    tr.insertCell(3).appendChild(createTrash(sample['id']));
 }
 
+function createImage(url){
+    var imgTag = document.createElement("img");
+    imgTag.className = "samp-img";
+    imgTag.setAttribute("src", url) ;
+    imgTag.setAttribute("width", 50);
+    imgTag.setAttribute("height", 50) ;
+
+    return imgTag;
+}
+
+function createTrash(id){
+    var iTag = document.createElement("i");
+    iTag.className = "fas fa-minus";
+    iTag.setAttribute("data-itemid",id) ;
+    iTag.addEventListener('click',deleteSample);
+    iTag.setAttribute("style", "font-size:25px;") ;
+
+    return iTag;
+}
+
+function deleteSample(){
+    /* deletes sample and re-displays view */
+    let id = this.getAttribute('data-itemid');
+    pl = playlistOperations.getSelected();
+    playlistOperations.removeSong(id, pl);
+    displaySamples(pl);
+}
 
 // firebase
 
