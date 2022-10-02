@@ -27,9 +27,15 @@ const playlistOperations = {
     addSong(song, playlist){
         playlist.songs.push(song);
     },
-    removeSong(song, playlist){
-        index = playlist.songs.indexOf(song);
-        playlist.songs.splice(index, 1);
+    removeSong(id, playlist){
+        let songs = playlist.songs;
+        for(i = 0; i<songs.length; i++){
+            sample = songs[i];
+            if(sample.id == id){
+                songs.splice(i,1);
+                break;
+            }
+        }
     },
     getPlaylists(){
         return this.playlists;

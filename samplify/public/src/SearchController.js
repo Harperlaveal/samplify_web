@@ -10,6 +10,26 @@ function init(){
 
 function bindEvents(){
     document.querySelector('#search').addEventListener('click', getSamplesFromSong);
+    document.querySelector('#add').addEventListener('click', addSamplesToPlaylist);
+}
+
+function addSamplesToPlaylist(){
+    var select = document.getElementById("select-pl");
+    var value = select.value;
+
+    console.log(value);
+
+    let pl = playlistOperations.search(value);
+
+    if(pl!=null){
+        resultOperations.removeResults();
+        sel = resultOperations.getSelected();
+        for(let i = 0; i<sel.length; i++){
+            playlistOperations.addSong(sel[i], pl);
+        }
+        resultOperations.clearSelected();
+        displaySamples();
+    }
 }
 
 async function getSamplesFromSong(){
@@ -30,33 +50,44 @@ async function getSamplesFromSong(){
         .catch(err => console.error(err));
         fetch('https://genius.p.rapidapi.com/songs/' + id, options)
 	        .then(response => response.json())
-	        .then(data => displaySamples(data))
+	        .then(data => readSamples(data))
 	        .catch(err => console.error(err));
 }
 
-function displaySamples(data){
+function readSamples(data){
     document.querySelector('#samples').innerHTML = null;
-    samples = data['response']['song']['song_relationships']['0']['songs'];
-    for(i = 0; i<samples.length; i++){
-        sample = samples[i];
-        title = sample['title'];
-        artist = sample['artist_names'];
-        img = sample['header_image_thumbnail_url'];
-        id = sample['id']
+    let samples = data['response']['song']['song_relationships']['0']['songs'];
 
-        // let sampObj = new Sample();
+    for(let i = 0; i<samples.length; i++){
+        let sample = samples[i];
+        let samp = new Sample();
+        samp['title'] = sample['title'];
+        samp['artist'] = sample['artist_names'];
+        samp['imgUrl'] = sample['header_image_thumbnail_url'];
+        samp['id'] = sample['id'];
 
-        displaySample(title, artist, img, id)
+        resultOperations.addResult(samp);
+    }
+    
+    displaySamples();
+}
+
+function displaySamples(){
+    document.querySelector('#samples').innerHTML = null;
+    let list = resultOperations.getResults();
+    for(let i = 0; i<list.length; i++){
+        sample = list[i];
+        displaySample(sample);
     }
 }
 
-function displaySample(title, artist, img, id){
+function displaySample(sample){
     var tbody = document.querySelector('#samples');
     var tr = tbody.insertRow();
-    tr.insertCell(0).innerText = title;
-    tr.insertCell(1).innerText = artist;
-    tr.insertCell(2).appendChild(createImage(img));
-    tr.insertCell(3).appendChild(createSelect(id));
+    tr.insertCell(0).innerText = sample['title'];
+    tr.insertCell(1).innerText = sample['artist'];
+    tr.insertCell(2).appendChild(createImage(sample['imgUrl']));
+    tr.insertCell(3).appendChild(createSelect(sample['id']));
 }
 
 function createImage(url){
@@ -80,7 +111,8 @@ function createSelect(id){
 }
 
 function toggle(){
-    //let id = this.getAttribute('data-itemid');
+    let id = this.getAttribute('data-itemid');
+    resultOperations.toggleResult(id);
     let tr = this.parentNode.parentNode;
     tr.classList.toggle('alert-success');
 }

@@ -5,5 +5,6 @@ class Playlist{
          this.id = id;
          this.isSelected = false;
          this.desc = null;
+         this.songs = [];
     }
 }

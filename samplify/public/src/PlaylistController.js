@@ -46,7 +46,7 @@ function updateOptions(){
     let list = playlistOperations.getPlaylists();
     for(let i=0;i<list.length;i++){
         let opt = document.createElement('option');
-        opt.value = list[i]['title'];
+        opt.value = list[i]['id'];
         opt.innerHTML = list[i]['title'];
         select.appendChild(opt);
     }
@@ -78,13 +78,8 @@ function updatePlaylist(){
     updateOptions();
 }
 
-function deleteSample(){
-    /* deletes sample and re-displays view */
-}
-
 function displayPlaylists(){
     /* displays each playlist in list*/
-    console.log("hello")
     let lists = playlistOperations.getPlaylists();
     document.querySelector('#pl-items').innerHTML = null; //first clears table
     for(i = 0; i<lists.length; i++){
@@ -122,22 +117,57 @@ function changeView(){
 
     document.querySelector('#pl-name').innerHTML = pl['title'];
     document.querySelector('#pl-desc').innerHTML = pl['desc'];
+
+    displaySamples(pl);
 }
 
-function createIcon(className,fn, id){
-    /* creates icons for selection */
-    
-}
-
-function displaySamples(){
+function displaySamples(playlist){
     /* displays each sample in list*/
+    document.querySelector('#pl-sample-table').innerHTML = null;
+    let list = playlist['songs'];
+    for(let i = 0; i<list.length; i++){
+        sample = list[i];
+        displaySample(sample);
+    }
 }
 
-function displaySample(){
+function displaySample(sample){
     /* displays sample information as a row */
-
+    var tbody = document.querySelector('#pl-sample-table');
+    var tr = tbody.insertRow();
+    tr.insertCell(0).innerText = sample['title'];
+    tr.insertCell(1).innerText = sample['artist'];
+    tr.insertCell(2).appendChild(createImage(sample['imgUrl']));
+    tr.insertCell(3).appendChild(createTrash(sample['id']));
 }
 
+function createImage(url){
+    var imgTag = document.createElement("img");
+    imgTag.className = "samp-img";
+    imgTag.setAttribute("src", url) ;
+    imgTag.setAttribute("width", 50);
+    imgTag.setAttribute("height", 50) ;
+
+    return imgTag;
+}
+
+function createTrash(id){
+    var iTag = document.createElement("i");
+    iTag.className = "fas fa-minus";
+    iTag.setAttribute("data-itemid",id) ;
+    iTag.addEventListener('click',deleteSample);
+    iTag.setAttribute("style", "font-size:25px;") ;
+
+    return iTag;
+}
+
+function deleteSample(){
+    /* deletes sample and re-displays view */
+    let id = this.getAttribute('data-itemid');
+    pl = playlistOperations.getSelected();
+    playlistOperations.removeSong(id, pl);
+    displaySamples(pl);
+}
 
 // firebase
 
