@@ -27,6 +27,21 @@ function addPlaylist(){
         displayPlaylist(pl);
 
         document.getElementById('pl-in-txt').value = "";
+
+        updateOptions();
+    }
+}
+
+function updateOptions(){
+    document.querySelector('#select-pl').innerHTML = null;
+    let select = document.getElementById('select-pl');
+    let list = playlistOperations.getPlaylist();
+    for(let i=0;i<list.length;i++){
+        console.log(list[i]['title'])
+        let opt = document.createElement('option');
+        opt.value = list[i]['title'];
+        opt.innerHTML = list[i]['title'];
+        select.appendChild(opt);
     }
 }
 

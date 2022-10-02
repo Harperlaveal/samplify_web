@@ -1,5 +1,9 @@
 window.addEventListener("load", init);
 
+window.onload = function() {
+
+};
+
 function init(){
     bindEvents();
 }

@@ -31,4 +31,7 @@ const playlistOperations = {
         index = playlist.songs.indexOf(song);
         playlist.songs.splice(index, 1);
     },
+    getPlaylist(){
+        return this.playlists;
+    }
 }
