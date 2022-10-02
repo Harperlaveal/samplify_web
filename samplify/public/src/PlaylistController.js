@@ -46,7 +46,7 @@ function updateOptions(){
     let list = playlistOperations.getPlaylists();
     for(let i=0;i<list.length;i++){
         let opt = document.createElement('option');
-        opt.value = list[i]['title'];
+        opt.value = list[i]['id'];
         opt.innerHTML = list[i]['title'];
         select.appendChild(opt);
     }
@@ -84,7 +84,6 @@ function deleteSample(){
 
 function displayPlaylists(){
     /* displays each playlist in list*/
-    console.log("hello")
     let lists = playlistOperations.getPlaylists();
     document.querySelector('#pl-items').innerHTML = null; //first clears table
     for(i = 0; i<lists.length; i++){
@@ -122,6 +121,8 @@ function changeView(){
 
     document.querySelector('#pl-name').innerHTML = pl['title'];
     document.querySelector('#pl-desc').innerHTML = pl['desc'];
+
+    displaySamples(pl);
 }
 
 function createIcon(className,fn, id){
@@ -129,13 +130,21 @@ function createIcon(className,fn, id){
     
 }
 
-function displaySamples(){
+function displaySamples(playlist){
     /* displays each sample in list*/
+    document.querySelector('#pl-sample-table').innerHTML = null;
+    let list = playlist['songs'];
+    for(let i = 0; i<list.length; i++){
+        sample = list[i];
+        displaySample(sample);
+    }
 }
 
-function displaySample(){
+function displaySample(sample){
     /* displays sample information as a row */
-
+    var tbody = document.querySelector('#pl-sample-table');
+    var tr = tbody.insertRow();
+    tr.insertCell(0).innerText = sample['title'];
 }
 
 
