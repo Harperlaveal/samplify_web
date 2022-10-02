@@ -21,6 +21,7 @@ function addPlaylist(){
 
     if(playname!=''){
         pl['title'] = document.getElementById('pl-in-txt').value;
+        pl['id'] = makeId();
 
         playlistOperations.addPlaylist(pl);
 
@@ -32,10 +33,17 @@ function addPlaylist(){
     }
 }
 
+function makeId(){
+    let rand = Math.floor(Math.random() * 100);
+    let date = Date.now();
+
+    return rand+"_"+date;
+}
+
 function updateOptions(){
     document.querySelector('#select-pl').innerHTML = null;
     let select = document.getElementById('select-pl');
-    let list = playlistOperations.getPlaylist();
+    let list = playlistOperations.getPlaylists();
     for(let i=0;i<list.length;i++){
         console.log(list[i]['title'])
         let opt = document.createElement('option');
@@ -47,30 +55,69 @@ function updateOptions(){
 
 function deletePlaylist(){
     /* deletes playlist and re-displays view */
+    playlistOperations.removePlaylist();
+
+    document.getElementById("pl-name").innerHTML = null;
+    document.getElementById("pl-desc").innerHTML = null;
+    displayPlaylists();
+    updateOptions();
 }
 
 function updatePlaylist(){
     /* updates playlist and re-displays view */
+    pl = playlistOperations.getSelected();
+
+    pl['title'] = document.getElementById("pl-name").innerHTML;
+    pl['desc'] = document.getElementById("pl-desc").innerHTML;
+
+    displayPlaylists();
+    updateOptions();
 }
 
 function deleteSample(){
     /* deletes sample and re-displays view */
 }
 
-function displayPlaylists(playlists){
+function displayPlaylists(){
     /* displays each playlist in list*/
+    console.log("hello")
+    let lists = playlistOperations.getPlaylists();
     document.querySelector('#pl-items').innerHTML = null; //first clears table
-    for(i = 0; i<playlists.length; i++){
-        displayPlaylist(playlists[i]);
+    for(i = 0; i<lists.length; i++){
+        displayPlaylist(lists[i]);
     }
 }
 
 function displayPlaylist(pl){
     /* displays playlist as clickable button*/
-    var tbody = document.querySelector('#pl-items');
-    var tr = tbody.insertRow();
-    let cell = tr.insertCell(0);
-    cell.innerText = pl['title'];
+    var list = document.querySelector('#pl-items');
+    list.appendChild(createButton(pl));
+}
+
+function createButton(pl){
+    var button = document.createElement("button");
+    button.className = "btn btn-light";
+    button.innerHTML = pl['title'];
+    button.setAttribute("data-itemid", pl['id']) ;
+    button.onclick = toggle;
+
+    return button;
+}
+
+function toggle(){
+    //console.log(pl['title'])
+    let id = this.getAttribute('data-itemid');
+    playlistOperations.selectPlaylist(id);
+    changeView();
+    
+}
+
+function changeView(){
+    /* changes playlist view depending on which playlist is clicked */
+    let pl = playlistOperations.getSelected();
+
+    document.querySelector('#pl-name').innerHTML = pl['title'];
+    document.querySelector('#pl-desc').innerHTML = pl['desc'];
 }
 
 function createIcon(className,fn, id){
@@ -87,9 +134,6 @@ function displaySample(){
 
 }
 
-function changeView(){
-    /* changes playlist view depending on which playlist is clicked */
-}
 
 // firebase
 

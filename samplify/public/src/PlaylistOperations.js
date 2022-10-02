@@ -5,10 +5,10 @@ const playlistOperations = {
     addPlaylist(playlist){
         this.playlists.push(playlist);
     },
-    removePlaylist(id){
+    removePlaylist(){
         for(i = 0; i<this.playlists.length; i++){
             pl = this.playlists[i];
-            if(pl.id === id){
+            if(pl.isSelected){
                 this.playlists.splice(i,1);
                 break;
             }
@@ -31,7 +31,26 @@ const playlistOperations = {
         index = playlist.songs.indexOf(song);
         playlist.songs.splice(index, 1);
     },
-    getPlaylist(){
+    getPlaylists(){
         return this.playlists;
+    },
+    selectPlaylist(id){
+        for(i = 0; i<this.playlists.length; i++){
+            pl = this.playlists[i];
+            if(pl.id == id){
+                pl.isSelected = true;
+            }
+            else{
+                pl.isSelected = false;
+            }
+        }
+    },
+    getSelected(){
+        for(i = 0; i<this.playlists.length; i++){
+            pl = this.playlists[i];
+            if(pl.isSelected){
+                return pl;
+            }
+        }
     }
 }
