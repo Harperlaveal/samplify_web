@@ -38,18 +38,21 @@ function displaySamples(data){
         title = sample['title'];
         artist = sample['artist_names'];
         img = sample['header_image_thumbnail_url'];
+        id = sample['id']
 
-        displaySample(title, artist, img)
+        // let sampObj = new Sample();
+
+        displaySample(title, artist, img, id)
     }
 }
 
-function displaySample(title, artist, img){
+function displaySample(title, artist, img, id){
     var tbody = document.querySelector('#samples');
     var tr = tbody.insertRow();
     tr.insertCell(0).innerText = title;
     tr.insertCell(1).innerText = artist;
     tr.insertCell(2).appendChild(createImage(img));
-    tr.insertCell(3).appendChild(createSelect(title));
+    tr.insertCell(3).appendChild(createSelect(id));
 }
 
 function createImage(url){
