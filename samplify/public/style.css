@@ -37,11 +37,6 @@
   width:200px;
 }
 
-.results {
-  overflow-y: auto;
-  max-height: 200px;
-}
-
 .playlists {
   height: 300px;
   width: 300px;
