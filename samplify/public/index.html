@@ -20,10 +20,12 @@
         });
     </script> 
     <script type="module" src="src/PlaylistController.js"></script>
-    <script src="src/LoginController.js"></script>
+    <script type="module" src="src/LoginController.js"></script>
     <script src="src/SearchController.js"></script>
     <script src="src/PlaylistObject.js"></script>
     <script src="src/PlaylistOperations.js"></script>
+    <script src="src/SampleObject.js"></script>
+    <script src="src/ResultOperations.js"></script>
     <script>
       function openPage(evt, pageName) {
         var i, x, tablinks;
@@ -54,11 +56,69 @@
         </div>
 
         <div id="Search" class="page">
-            <div id="searchContent"></div>
+            <!--<div id="searchContent"></div>-->
+            <div class='container'>
+              <div class='form-group'>
+                  <div class='search-row'>
+                      <input id='song'  class='search-input' placeholder='Search song' type="text">
+                      <button id='search' type="search"><i class="fa fa-search"></i></button>
+                  </div>
+              </div>
+          
+              <table class='table table-bordered'>
+                  <thead class='thead-light'>
+                      <tr>
+                          <th>Title</th>
+                          <th>Artist</th>
+                          <th>Cover Art</th>
+                          <th>Select</th>
+                      </tr>
+                  </thead>
+                      <tbody id='samples' class='results'>
+                      
+                      </tbody>
+              </table>
+          
+              <div class='form-group'>
+                  <select id="select-pl" class="custom-select">
+                      <option>Choose Playlist</option>
+                  </select>
+                  <output id="playlist" for="playlist-to-add"></output>
+                  <button id='add' class="btn btn-outline-success">Add to playlist</button>
+              </div>
+          </div>
         </div>
     
         <div id="Playlists" class="page" style="display:none">
-          <div id="playlistContent"></div>
+          <div class='play-container'>
+            <div class='list-view'>
+                <div class='playlists'>
+                  <div id='pl-items'>
+                    
+                  </div>
+                </div>
+                <div class='form-group'>
+                    <div class='pl-in-row'>
+                        <input id='pl-in-txt'  class='pl-input' placeholder='Playlist name' type="text">
+                        <button id='create' class="btn btn-success">Create</button>
+                    </div>
+                </div>
+            </div>
+            <div class="pl-content">
+                <div id="Content" class="pl-text"> 
+                    <div contentEditable="true" class="pl-name" id="pl-name"></div>
+                    <p contentEditable="true" class="pl-desc" id="pl-desc"></p>
+                    <button id='edit' class="btn btn-success">Save</button>
+                    <button id='delete' class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
+                </div>
+                <div class='pl-samples'>
+                  <table class='table table-bordered'>
+                    <tbody id='pl-sample-table'>
+        
+                    </tbody>
+                  </table>
+                </div>
+            </div>
         </div>
     
         <div id="Profile" class="page" style="display:none">

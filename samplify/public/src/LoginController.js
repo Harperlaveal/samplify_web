@@ -1,5 +1,8 @@
 import { getAuth } from "firebase/auth";
-import { app } from "./App.js";
+import { firebaseConfig } from "../../firebase";
+import { initializeApp } from "firebase/app";
+
+export const app = initializeApp(firebaseConfig);
 
 /**
  * Set a cookie using the given name, value and expiry.
