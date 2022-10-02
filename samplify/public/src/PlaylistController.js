@@ -45,10 +45,14 @@ function updateOptions(){
     let select = document.getElementById('select-pl');
     let list = playlistOperations.getPlaylists();
     for(let i=0;i<list.length;i++){
-        console.log(list[i]['title'])
         let opt = document.createElement('option');
         opt.value = list[i]['title'];
         opt.innerHTML = list[i]['title'];
+        select.appendChild(opt);
+    }
+    if(list.length==0){
+        let opt = document.createElement('option');
+        opt.innerHTML = 'Choose Playlist';
         select.appendChild(opt);
     }
 }
