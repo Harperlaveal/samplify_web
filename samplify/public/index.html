@@ -88,7 +88,47 @@
         </div>
     
         <div id="Playlists" class="page" style="display:none">
-          <div id="playlistContent"></div>
+          <div class='play-container'>
+            <div class="list-view">
+                <div class='playlists'>
+                  <table class='table table-bordered'>
+                    <thead class='thead-light'>
+                        <tr>
+                            <th>Playlists</th>
+                        </tr>
+                    </thead>
+                    <tbody id='pl-items'>
+        
+                    </tbody>
+                  </table>
+                </div>
+                <div class='form-group'>
+                    <div class='pl-in-row'>
+                        <input id='pl-in-txt'  class='pl-input' placeholder='Playlist name' type="text">
+                        <button id='add' class="btn btn-success">Create</button>
+                    </div>
+                </div>
+            </div>
+            <div class="pl-content">
+                <div id="Content" class="pl-text"> 
+                    <div contentEditable="true" class="pl-name"></div>
+                    <p contentEditable="true" class="pl-desc"></p>
+                    <button id='edit' class="btn btn-success">Save</button>
+                    <button id='delete' class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
+                </div>
+                <div class='pl-samples'>
+                  <table class='table table-bordered'>
+                    <thead class='thead-light'>
+                        <tr>
+                            <th>Samples</th>
+                        </tr>
+                    </thead>
+                    <tbody id='pl-sample-table'>
+        
+                    </tbody>
+                  </table>
+                </div>
+            </div>
         </div>
     
         <div id="Profile" class="page" style="display:none">
