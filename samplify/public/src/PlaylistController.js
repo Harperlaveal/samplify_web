@@ -8,7 +8,7 @@ function init(){
 }
 
 function bindEvents(){
-    document.querySelector('#add').addEventListener('click',addPlaylist);
+    document.querySelector('#create').addEventListener('click',addPlaylist);
     document.querySelector('#delete').addEventListener('click',deletePlaylist);
     document.querySelector('#edit').addEventListener('click',updatePlaylist);
 }
