@@ -28,6 +28,7 @@ function addSamplesToPlaylist(){
             playlistOperations.addSong(sel[i], pl);
         }
         resultOperations.clearSelected();
+        document.querySelector('#samples').innerHTML = null;
         displaySamples();
     }
 }
@@ -45,7 +46,7 @@ async function getSamplesFromSong(){
         }
     };
     resultOperations.clearResults();
-    document.querySelector('#samples').innerHTML = null; // clear html
+    document.querySelector('#samples').innerHTML = null;
     const loader = document.querySelector('#loader');
     loader.style.display = 'block';
     await fetch('https://genius.p.rapidapi.com/search?q=' + search, options)
