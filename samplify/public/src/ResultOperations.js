@@ -33,6 +33,9 @@ const resultOperations = {
     clearSelected(){
         this.selected = [];
     },
+    clearResults(){
+        this.results = [];
+    },
     toggleResult(id){
         for(i = 0; i<this.results.length; i++){
             re = this.results[i];
