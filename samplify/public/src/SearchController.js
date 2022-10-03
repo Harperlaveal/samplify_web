@@ -55,21 +55,34 @@ async function getSamplesFromSong(){
 }
 
 function readSamples(data){
+    resultOperations.clearResults();
     document.querySelector('#samples').innerHTML = null;
     let samples = data['response']['song']['song_relationships']['0']['songs'];
 
-    for(let i = 0; i<samples.length; i++){
-        let sample = samples[i];
-        let samp = new Sample();
-        samp['title'] = sample['title'];
-        samp['artist'] = sample['artist_names'];
-        samp['imgUrl'] = sample['header_image_thumbnail_url'];
-        samp['id'] = sample['id'];
+    if(samples.length!=0){
+        for(let i = 0; i<samples.length; i++){
+            let sample = samples[i];
+            let samp = new Sample();
+            samp['title'] = sample['title'];
+            samp['artist'] = sample['artist_names'];
+            samp['imgUrl'] = sample['header_image_thumbnail_url'];
+            samp['id'] = sample['id'];
 
-        resultOperations.addResult(samp);
+            resultOperations.addResult(samp);
+        }
+        
+        displaySamples();
     }
-    
-    displaySamples();
+    else{
+        noSamples();
+    }
+}
+
+function noSamples(){
+    var tag = document.createElement("div");
+    tag.innerHTML = "No samples found :(";
+    tag.setAttribute("style","padding:25px;")
+    document.querySelector('#search-table').appendChild(tag);
 }
 
 function displaySamples(){
