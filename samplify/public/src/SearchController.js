@@ -129,5 +129,5 @@ function toggle(){
     let id = this.getAttribute('data-itemid');
     resultOperations.toggleResult(id);
     let tr = this.parentNode.parentNode;
-    tr.classList.toggle('alert-success');
+    tr.classList.toggle('alert-primary');
 }
