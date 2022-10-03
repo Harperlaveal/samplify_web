@@ -26,7 +26,7 @@
 }
 
 .header {
-  background-color: #4CAF50;
+  background-color: #0d6efd;
   height: 100px;
   padding-top: 25px;
   padding-bottom: 100px;
@@ -37,10 +37,11 @@
 .search-row {
   display: flex;
   justify-content: center;
+  border-bottom: 1px solid #3a3a3a;
 }
 
 .search-input {
-  width:100%
+  width:100%;
 }
 
 .custom-select {
@@ -219,6 +220,7 @@
 #login-form-submit {
   width: 33%;
   margin: 10px;
+  border: 1px solid;
 }
 
 #signup-button {
