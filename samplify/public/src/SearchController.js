@@ -44,6 +44,8 @@ async function getSamplesFromSong(){
             'X-RapidAPI-Host': 'genius.p.rapidapi.com'
         }
     };
+    const loader = document.querySelector('#loader');
+    loader.style.display = 'block'
     await fetch('https://genius.p.rapidapi.com/search?q=' + search, options)
         .then(response => response.json())
         .then(data => id = data['response']['hits']['0']['result']['id'])
@@ -52,6 +54,7 @@ async function getSamplesFromSong(){
 	        .then(response => response.json())
 	        .then(data => readSamples(data))
 	        .catch(err => console.error(err));
+    loader.style.display = 'none'
 }
 
 function readSamples(data){
@@ -82,7 +85,7 @@ function noSamples(){
     var tag = document.createElement("div");
     tag.innerHTML = "No samples found :(";
     tag.setAttribute("style","padding:25px;")
-    document.querySelector('#search-table').appendChild(tag);
+    document.querySelector('#samples').appendChild(tag);
 }
 
 function displaySamples(){
