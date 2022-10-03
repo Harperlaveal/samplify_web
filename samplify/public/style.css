@@ -9,6 +9,8 @@
 .search-container {
   background-color: white;
   padding: 25px;
+  margin-bottom: 25px;
+  padding-bottom: 5px;
   border-radius: 0px 0px 10px 10px;
 }
 
@@ -22,6 +24,8 @@
   flex-direction: row;
   background-color: white;
   padding: 25px;
+  margin-bottom: 25px;
+  padding-bottom: 5px;
   border-radius: 0px 0px 10px 10px;
 }
 
