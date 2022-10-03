@@ -44,8 +44,10 @@ async function getSamplesFromSong(){
             'X-RapidAPI-Host': 'genius.p.rapidapi.com'
         }
     };
+    resultOperations.clearResults();
+    document.querySelector('#samples').innerHTML = null; // clear html
     const loader = document.querySelector('#loader');
-    loader.style.display = 'block'
+    loader.style.display = 'block';
     await fetch('https://genius.p.rapidapi.com/search?q=' + search, options)
         .then(response => response.json())
         .then(data => id = data['response']['hits']['0']['result']['id'])
@@ -58,8 +60,6 @@ async function getSamplesFromSong(){
 }
 
 function readSamples(data){
-    resultOperations.clearResults();
-    document.querySelector('#samples').innerHTML = null;
     let samples = data['response']['song']['song_relationships']['0']['songs'];
 
     if(samples.length!=0){
@@ -89,7 +89,6 @@ function noSamples(){
 }
 
 function displaySamples(){
-    document.querySelector('#samples').innerHTML = null;
     let list = resultOperations.getResults();
     for(let i = 0; i<list.length; i++){
         sample = list[i];
