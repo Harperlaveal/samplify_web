@@ -44,6 +44,10 @@ async function getSamplesFromSong(){
             'X-RapidAPI-Host': 'genius.p.rapidapi.com'
         }
     };
+    resultOperations.clearResults();
+    document.querySelector('#samples').innerHTML = null; // clear html
+    const loader = document.querySelector('#loader');
+    loader.style.display = 'block';
     await fetch('https://genius.p.rapidapi.com/search?q=' + search, options)
         .then(response => response.json())
         .then(data => id = data['response']['hits']['0']['result']['id'])
@@ -52,28 +56,39 @@ async function getSamplesFromSong(){
 	        .then(response => response.json())
 	        .then(data => readSamples(data))
 	        .catch(err => console.error(err));
+    loader.style.display = 'none'
 }
 
 function readSamples(data){
-    document.querySelector('#samples').innerHTML = null;
     let samples = data['response']['song']['song_relationships']['0']['songs'];
 
-    for(let i = 0; i<samples.length; i++){
-        let sample = samples[i];
-        let samp = new Sample();
-        samp['title'] = sample['title'];
-        samp['artist'] = sample['artist_names'];
-        samp['imgUrl'] = sample['header_image_thumbnail_url'];
-        samp['id'] = sample['id'];
+    if(samples.length!=0){
+        for(let i = 0; i<samples.length; i++){
+            let sample = samples[i];
+            let samp = new Sample();
+            samp['title'] = sample['title'];
+            samp['artist'] = sample['artist_names'];
+            samp['imgUrl'] = sample['header_image_thumbnail_url'];
+            samp['id'] = sample['id'];
 
-        resultOperations.addResult(samp);
+            resultOperations.addResult(samp);
+        }
+        
+        displaySamples();
     }
-    
-    displaySamples();
+    else{
+        noSamples();
+    }
+}
+
+function noSamples(){
+    var tag = document.createElement("div");
+    tag.innerHTML = "No samples found :(";
+    tag.setAttribute("style","padding:25px;")
+    document.querySelector('#samples').appendChild(tag);
 }
 
 function displaySamples(){
-    document.querySelector('#samples').innerHTML = null;
     let list = resultOperations.getResults();
     for(let i = 0; i<list.length; i++){
         sample = list[i];
