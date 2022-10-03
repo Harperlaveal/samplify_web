@@ -6,14 +6,27 @@
   user-select: none;
 }
 
+.search-container {
+  background-color: white;
+  padding: 25px;
+  border-radius: 0px 0px 10px 10px;
+}
+
+#search-table {
+  user-select: text;
+}
+
 .play-container {
   user-select: none;
   display: flex;
   flex-direction: row;
+  background-color: white;
+  padding: 25px;
+  border-radius: 0px 0px 10px 10px;
 }
 
 .header {
-  background-color: #495057;
+  background-color: #4CAF50;
   height: 100px;
   padding-top: 25px;
   padding-bottom: 100px;
@@ -22,7 +35,6 @@
 }
 
 .search-row {
-  margin-top: 25px;
   display: flex;
   justify-content: center;
 }
@@ -54,20 +66,16 @@
 }
 
 .pl-input {
-  padding: 5px;
   position: relative;
 }
 
-.list-view {
-  padding: 25px
-}
 
 .pl-in-row {
   margin-top: 10px;
 }
 
 .pl-content {
-  margin-top: 25px;
+  margin-left:10px;
   width: 100%;
   height: 300px;
   display: flex;
@@ -131,4 +139,99 @@
 [contenteditable="true"].pl-name * {
   display:inline;
   white-space:nowrap;
+}
+
+
+
+#main-holder {
+  width: 50%;
+  height: 70%;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 7px;
+  box-shadow: 0px 0px 5px 2px black;
+}
+
+#login-error-msg-holder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
+#login-error-msg {
+  width: 23%;
+  text-align: center;
+  margin: 0;
+  padding: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #8a0000;
+  border: 1px solid #8a0000;
+  background-color: #e58f8f;
+  opacity: 0;
+}
+
+#error-msg-second-line {
+  display: block;
+}
+
+#login-form {
+  align-self: flex-start;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  text-align: center;
+}
+
+#login-header {
+  color: black;
+  text-align: center;
+  font-weight: bold;
+}
+
+#login-container {
+  background-color: white;
+  border-radius: 0px 0px 10px 10px;
+  padding:25px;
+}
+
+.login-form-field::placeholder {
+  color: #3a3a3a;
+}
+
+.login-form-field {
+  margin-top: 0px;
+  border-bottom: 1px solid #3a3a3a;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  outline: none;
+
+}
+
+#login-form-submit {
+  width: 33%;
+  margin: 10px;
+}
+
+#signup-button {
+  width: 33%;
+  cursor: pointer;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  background-color: black;
 }

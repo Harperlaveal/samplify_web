@@ -12,13 +12,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script> 
-        $(function(){
-          $("#searchContent").load("src/pages/search.html"); 
-          $("#playlistContent").load("src/pages/playlists.html"); 
-          $("#profileContent").load("src/pages/profile.html"); 
-        });
-    </script> 
     <script type="module" src="src/PlaylistController.js"></script>
     <script type="module" src="src/LoginController.js"></script>
     <script src="src/SearchController.js"></script>
@@ -35,10 +28,10 @@
         }
         tablinks = document.getElementsByClassName("tablink");
         for (i = 0; i < x.length; i++) {
-          tablinks[i].className = tablinks[i].className.replace(" w3-green", "");
+          tablinks[i].className = tablinks[i].className.replace(" w3-white", "");
         }
         document.getElementById(pageName).style.display = "block";
-        evt.currentTarget.className += " w3-green";
+        evt.currentTarget.className += " w3-white";
       }
   </script>
 </head>
@@ -50,14 +43,14 @@
         </div>
 
         <div class="w3-bar w3-black">
-            <button class="w3-bar-item w3-button tablink w3-green" onclick="openPage(event,'Search')">Search</button>
+            <button class="w3-bar-item w3-button tablink w3-white" onclick="openPage(event,'Search')">Search</button>
             <button class="w3-bar-item w3-button tablink" onclick="openPage(event,'Playlists')">Playlists</button>
             <button class="w3-bar-item w3-button tablink" onclick="openPage(event,'Profile')">Profile</button>
         </div>
 
         <div id="Search" class="page">
             <!--<div id="searchContent"></div>-->
-            <div class='container'>
+            <div class='search-container'>
               <div class='form-group'>
                   <div class='search-row'>
                       <input id='song'  class='search-input' placeholder='Search song' type="text">
@@ -65,7 +58,7 @@
                   </div>
               </div>
           
-              <table class='table table-bordered'>
+              <table id='search-table' class='table table-bordered'>
                   <thead class='thead-light'>
                       <tr>
                           <th>Title</th>
@@ -119,10 +112,20 @@
                   </table>
                 </div>
             </div>
+          </div>
         </div>
-    
+
         <div id="Profile" class="page" style="display:none">
-          <div id="profileContent"></div>
+          <div id="login-container">
+              <h1 id="login-header">Login</h1>
+              
+              <form id="login-form">
+                <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username">
+                <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
+                <input type="submit" class="btn btn-success" value="Login" id="login-form-submit">
+                <input type="signup" class="btn btn-outline-success" value="Signup" id="signup-button">
+              </form>
+          </div>
         </div>
 </body>
 
