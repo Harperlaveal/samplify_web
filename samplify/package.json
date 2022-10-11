@@ -4,13 +4,17 @@
   "description": "",
   "main": "App.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "author": "Gareth",
   "license": "ISC",
   "dependencies": {
     "build": "^0.1.4",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
     "firebase": "^9.10.0",
-    "genius-lyrics-api": "^3.2.0"
+    "genius-lyrics-api": "^3.2.0",
+    "nodemon": "^2.0.20"
   }
 }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="logo.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Samplify</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="module" src="src/PlaylistController.js"></script>
+    <script type="module" src="src/LoginController.js"></script>
+    <script src="src/SearchController.js"></script>
+    <script src="src/PlaylistObject.js"></script>
+    <script src="src/PlaylistOperations.js"></script>
+    <script src="src/SampleObject.js"></script>
+    <script src="src/ResultOperations.js"></script>
+</head>
+
+<body>
+    <div class='container'>
+        <div class='header'>
+            <h1 class='header-text'>Samplify<i class="fa fa-music"></i></h1>
+        </div>
+
+        <div class="w3-bar w3-black">
+            <button class="w3-bar-item w3-button tablink w3-white" onclick="">Search</button>
+            <button class="w3-bar-item w3-button tablink" onclick="">Playlists</button>
+            <button class="w3-bar-item w3-button tablink" onclick="">Profile</button>
+        </div>
+
+        <div id="Search" class="page">
+            <div class='search-container'>
+              <div class='form-group'>
+                  <div class='search-row'>
+                      <input id='song'  class='search-input' placeholder='Search song' type="text">
+                      <button id='search' type="search"><i class="fa fa-search"></i></button>
+                  </div>
+              </div>
+          
+              <table id='search-table' class='table table-bordered'>
+                  <thead class='thead-light'>
+                      <tr>
+                          <th>Title</th>
+                          <th>Artist</th>
+                          <th>Cover Art</th>
+                          <th>Select</th>
+                      </tr>
+                  </thead>
+                  <tbody id='samples' class='results'>
+                  </tbody>
+              </table>
+
+              <div id="loader" style="display: none; padding-left:25px; padding-bottom:25px">Searching...</div>
+          
+              <div class='form-group'>
+                  <select id="select-pl" class="custom-select">
+                      <option>Choose Playlist</option>
+                  </select>
+                  <output id="playlist" for="playlist-to-add"></output>
+                  <button id='add' class="btn btn-outline-primary">Add to playlist</button>
+              </div>
+          </div>
+        </div>
+</body>
+
+</html>
