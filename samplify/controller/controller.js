@@ -18,6 +18,10 @@ exports.getLogin = (req,res) => {
     res.render('login',{'pageTitle':'Login'});
 }
 
+exports.getSignin = (req,res) => {
+    res.render('register',{'pageTitle':'Signin'});
+}
+
 exports.getPlaylistsDynamic = (req,res) => {
     const pid = req.params.pid;
     console.log(pid);

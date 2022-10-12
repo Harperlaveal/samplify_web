@@ -12,19 +12,13 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="module" src="src/PlaylistController.js"></script>
     <script type="module" src="src/LoginController.js"></script>
-    <script src="src/SearchController.js"></script>
-    <script src="src/PlaylistObject.js"></script>
-    <script src="src/PlaylistOperations.js"></script>
-    <script src="src/SampleObject.js"></script>
-    <script src="src/ResultOperations.js"></script>
 </head>
 
 <body>
     <div class='container'>
         <div class='header'>
-            <h1 class='header-text'>Samplify<i class="fa fa-music"></i></h1>
+            <h1 class='header-text'>Login</h1>
         </div>
 
         <nav class="navbar navbar-expand-sm bg-light">
@@ -42,14 +36,15 @@
 
         <div id="Profile" class="page">
           <div id="login-container">
-              <h1 id="login-header">Login</h1>
-              
-              <form id="login-form">
-                <input type="text" name="email" id="email-field" class="login-form-field" placeholder="Email">
-                <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
-                <input type="submit" class="btn btn-outline-primary" value="Login" id="login-form-submit">
-                <input type="signup" class="btn btn-outline-secondary" value="Signup" id="signup-button">
-              </form>
+            <% if (messages.error) { %>
+              <%= messages.error %>
+            <% } %>
+            <form action='/login' method="POST" id="login-form">
+              <input type="text" name="email" id="email-field" class="login-form-field" placeholder="Email" required>
+              <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password" required>
+              <input type="submit" class="btn btn-primary" value="Login" id="login-form-submit">
+              <a href="/register">Signup</a>
+            </form>
           </div>
         </div>
 </body>

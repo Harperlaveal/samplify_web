@@ -207,6 +207,12 @@
   padding:25px;
 }
 
+#profile-container {
+  background-color: white;
+  border-radius: 0px 0px 10px 10px;
+  padding:25px;
+}
+
 .login-form-field::placeholder {
   color: #3a3a3a;
 }
@@ -217,17 +223,17 @@
   margin-bottom: 10px;
   border-radius: 3px;
   outline: none;
-
 }
 
 #login-form-submit {
-  width: 33%;
+  width: 20%;
   margin: 10px;
   border: 1px solid;
 }
 
 #signup-button {
-  width: 33%;
+  width: 20%;
+  margin: 10px;
   cursor: pointer;
 }
 
