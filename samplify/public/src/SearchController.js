@@ -57,7 +57,6 @@ async function getSamplesFromSong(){
 	        .then(response => response.json())
 	        .then(data => readSamples(data))
 	        .catch(err => console.error(err));
-    loader.style.display = 'none'
 }
 
 function readSamples(data){
@@ -76,6 +75,8 @@ function readSamples(data){
         }
         
         displaySamples();
+        const loader = document.querySelector('#loader');
+        loader.style.display = 'none'
     }
     else{
         noSamples();

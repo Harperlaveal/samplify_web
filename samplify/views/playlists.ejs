@@ -2,23 +2,22 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="logo.webp" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Samplify</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="module" src="src/PlaylistController.js"></script>
-    <script type="module" src="src/LoginController.js"></script>
-    <script src="src/SearchController.js"></script>
-    <script src="src/PlaylistObject.js"></script>
-    <script src="src/PlaylistOperations.js"></script>
-    <script src="src/SampleObject.js"></script>
-    <script src="src/ResultOperations.js"></script>
+  <meta charset="UTF-8">
+  <link rel="icon" href="logo.webp" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Samplify</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="module" src="src/PlaylistController.js"></script>
+  <script type="module" src="src/LoginController.js"></script>
+  <script src="src/SearchController.js"></script>
+  <script src="src/PlaylistObject.js"></script>
+  <script src="src/PlaylistOperations.js"></script>
+  <script src="src/SampleObject.js"></script>
+  <script src="src/ResultOperations.js"></script>
 </head>
 
 <body>
@@ -27,11 +26,21 @@
             <h1 class='header-text'>Samplify<i class="fa fa-music"></i></h1>
         </div>
 
-        <div class="w3-bar w3-black">
-            <button class="w3-bar-item w3-button tablink" onclick="">Search</button>
-            <button class="w3-bar-item w3-button tablink w3-white" onclick="">Playlists</button>
-            <button class="w3-bar-item w3-button tablink" onclick="">Profile</button>
-        </div>
+        <nav class="navbar navbar-expand-sm bg-light">
+          <div class="container-fluid">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="/search">Search</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/playlists">Playlists</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/profile">Profile</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
     
         <div id="Playlists" class="page">
           <div class='play-container'>

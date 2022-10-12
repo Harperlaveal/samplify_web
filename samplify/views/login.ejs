@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="logo.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Samplify</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="module" src="src/PlaylistController.js"></script>
+    <script type="module" src="src/LoginController.js"></script>
+    <script src="src/SearchController.js"></script>
+    <script src="src/PlaylistObject.js"></script>
+    <script src="src/PlaylistOperations.js"></script>
+    <script src="src/SampleObject.js"></script>
+    <script src="src/ResultOperations.js"></script>
+</head>
+
+<body>
+    <div class='container'>
+        <div class='header'>
+            <h1 class='header-text'>Samplify<i class="fa fa-music"></i></h1>
+        </div>
+
+        <div id="Profile" class="page">
+          <div id="login-container">
+              <h1 id="login-header">Login</h1>
+              
+              <form id="login-form">
+                <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username">
+                <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
+                <input type="submit" class="btn btn-outline-primary" value="Login" id="login-form-submit">
+                <input type="signup" class="btn btn-outline-secondary" value="Signup" id="signup-button">
+              </form>
+          </div>
+        </div>
+</body>
+
+</html>

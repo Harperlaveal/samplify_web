@@ -1,0 +1,21 @@
+exports.getIndex = (req,res)=>{
+    res.render('index',{'pageTitle':'Samplify'});
+}
+
+exports.getSearch = (req,res) =>{
+    res.render('search',{'pageTitle':'Samplify'});
+}
+
+exports.getPlaylists = (req,res) => {
+    res.render('playlists',{'pageTitle':'Samplify'});
+}
+
+exports.getProfile = (req,res) => {
+    res.render('profile',{'pageTitle':'Samplify'});
+}
+
+exports.getPlaylistsDynamic = (req,res) => {
+    const pid = req.params.pid;
+    console.log(pid);
+    //res.render('playlists',{'user':playlists.search(pid)})
+}
