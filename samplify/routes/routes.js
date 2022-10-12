@@ -8,11 +8,9 @@ router.get('/search', controller.getSearch);
 router.get('/playlists', controller.getPlaylists);
 
 router.get('/profile', controller.getProfile);
- 
-router.post('/search',(req,res,next)=>{
-    console.log(req.body)
-    res.redirect('/admin')
-})
+
+router.get('/login', controller.getLogin);
+
 
 router.get('/', controller.getIndex);
 module.exports=router;

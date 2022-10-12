@@ -3,15 +3,19 @@ exports.getIndex = (req,res)=>{
 }
 
 exports.getSearch = (req,res) =>{
-    res.render('search',{'pageTitle':'Samplify'});
+    res.render('search',{'pageTitle':'Search'});
 }
 
 exports.getPlaylists = (req,res) => {
-    res.render('playlists',{'pageTitle':'Samplify'});
+    res.render('playlists',{'pageTitle':'Playlists'});
 }
 
 exports.getProfile = (req,res) => {
-    res.render('profile',{'pageTitle':'Samplify'});
+    res.render('profile',{'pageTitle':'Profile'});
+}
+
+exports.getLogin = (req,res) => {
+    res.render('login',{'pageTitle':'Login'});
 }
 
 exports.getPlaylistsDynamic = (req,res) => {
