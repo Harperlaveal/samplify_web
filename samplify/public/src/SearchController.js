@@ -35,28 +35,34 @@ function addSamplesToPlaylist(){
 
 async function getSamplesFromSong(){
     let search = document.getElementById("song").value;
-    console.log(search);
-    let id;
-    let sample;
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '08849a9ebamsha5f40676fc1520ep15a0a1jsn99c58874253f',
-            'X-RapidAPI-Host': 'genius.p.rapidapi.com'
-        }
-    };
-    resultOperations.clearResults();
-    document.querySelector('#samples').innerHTML = null;
-    const loader = document.querySelector('#loader');
-    loader.style.display = 'block';
-    await fetch('https://genius.p.rapidapi.com/search?q=' + search, options)
-        .then(response => response.json())
-        .then(data => id = data['response']['hits']['0']['result']['id'])
-        .catch(err => console.error(err));
-        fetch('https://genius.p.rapidapi.com/songs/' + id, options)
-	        .then(response => response.json())
-	        .then(data => readSamples(data))
-	        .catch(err => console.error(err));
+    if(search.trim().length != 0){
+        console.log(search);
+        let id;
+        let sample;
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': '08849a9ebamsha5f40676fc1520ep15a0a1jsn99c58874253f',
+                'X-RapidAPI-Host': 'genius.p.rapidapi.com'
+            }
+        };
+        resultOperations.clearResults();
+        document.querySelector('#samples').innerHTML = null;
+        const loader = document.querySelector('#loader');
+        loader.style.display = 'block';
+        await fetch('https://genius.p.rapidapi.com/search?q=' + search, options)
+            .then(response => response.json())
+            .then(data => id = data['response']['hits']['0']['result']['id'])
+            .catch(err => console.error(err));
+            fetch('https://genius.p.rapidapi.com/songs/' + id, options)
+                .then(response => response.json())
+                .then(data => readSamples(data))
+                .catch(err => console.error(err));
+    }
+    else{
+        resultOperations.clearResults();
+        document.querySelector('#samples').innerHTML = null;
+    }
 }
 
 function readSamples(data){
@@ -76,7 +82,8 @@ function readSamples(data){
         
         displaySamples();
         const loader = document.querySelector('#loader');
-        loader.style.display = 'none'
+        loader.style.display = 'none';
+        document.getElementById("song").value = null;
     }
     else{
         noSamples();
