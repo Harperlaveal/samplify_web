@@ -91,6 +91,8 @@ function readSamples(data){
 }
 
 function noSamples(){
+    const loader = document.querySelector('#loader');
+    loader.style.display = 'none';
     var tag = document.createElement("div");
     tag.innerHTML = "No samples found :(";
     tag.setAttribute("style","padding:25px;")

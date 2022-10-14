@@ -27,7 +27,7 @@ router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 
 // router.post('/login', controller.postLogin);
 
-const users = [];
+const users=require('../firebase');
 
 const initializePassport = require('./passport-config');
 initializePassport(
@@ -36,14 +36,13 @@ initializePassport(
   id => users.find(user => user.id === id)
 )
 
-router.post('/register', checkNotAuthenticated, async (req, res) => {
+router.post('/register', checkNotAuthenticated, async (req,res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        users.push({
-        id: Date.now().toString(),
-        name: req.body.username,
-        email: req.body.email,
-        password: hashedPassword,
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        await users.add({
+            name: req.body.username,
+            email: req.body.email,
+            password: hashedPassword,
         });
         res.redirect('/login');
     } catch {

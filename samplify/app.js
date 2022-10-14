@@ -7,7 +7,6 @@ const http=require('http');
 const path=require('path');
 const app=express();
 const routes = require('./routes/routes');
-const bcrypt = require('bcrypt');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
@@ -16,6 +15,7 @@ const methodOverride = require('method-override');
 app.set('view engine', 'ejs');
 app.set('views','views');
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json())
 app.use(flash());
 app.use(session({
   secret: process.env.SESSION_SECRET,
