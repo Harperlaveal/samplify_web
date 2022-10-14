@@ -19,11 +19,11 @@ router.get('/', checkAuthenticated, controller.getIndex);
 
 // router.post('/register', controller.postSignUp);
 
-router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-  }))
+// router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+//     successRedirect: '/',
+//     failureRedirect: '/login',
+//     failureFlash: true
+//   }))
 
 // router.post('/login', controller.postLogin);
 
