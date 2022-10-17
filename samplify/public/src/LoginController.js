@@ -83,6 +83,10 @@ export function checkCookie(cname, expected) {
     return stored === expected;
 }
 
+/**
+ * 
+ * @param {*} e 
+ */
 function submit(e) {
     e.preventDefault();
     const login = document.getElementById('login');

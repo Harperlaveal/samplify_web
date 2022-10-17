@@ -11,9 +11,9 @@ router.get('/playlists', checkAuthenticated, controller.getPlaylists);
 
 router.get('/profile', checkAuthenticated, controller.getProfile);
 
-router.get('/login', checkNotAuthenticated, controller.getLogin);
+router.get('/login', checkAuthenticated, controller.getLogin);
 
-router.get('/register', checkNotAuthenticated, controller.getSignin);
+router.get('/register', checkAuthenticated, controller.getSignin);
 
 router.get('/', checkAuthenticated, controller.getIndex);
 
@@ -58,7 +58,7 @@ router.delete('/logout', (req, res) => {
 })
 
 function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
+    if (getCookie("uid")) {
         return next()
     }
 
@@ -73,3 +73,20 @@ function checkNotAuthenticated(req, res, next) {
 }
 
 module.exports=router;
+
+/**
+ * Check if the given email matches any in the users database, if so set the uid as a cookie
+ */
+ async function checkEmail() {
+    const email = req.body.email;
+    let emailFound = false;
+    users.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data().email);
+        if(doc.data().email === email) {
+            //setCookie("uid", doc.id, 3);
+            emailFound = true;
+        }
+    })
+
+    return emailFound;
+}
