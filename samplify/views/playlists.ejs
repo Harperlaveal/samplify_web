@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="logo.webp" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Samplify</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="module" src="src/PlaylistController.js"></script>
+  <script type="module" src="src/LoginController.js"></script>
+  <script src="src/SearchController.js"></script>
+  <script src="src/PlaylistObject.js"></script>
+  <script src="src/PlaylistOperations.js"></script>
+  <script src="src/SampleObject.js"></script>
+  <script src="src/ResultOperations.js"></script>
+</head>
+
+<body>
+    <div class='container'>
+        <div class='header'>
+            <h1 class='header-text'>Samplify<i class="fa fa-music"></i></h1>
+        </div>
+
+        <nav class="navbar navbar-expand-sm bg-light">
+          <div class="container-fluid">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="/search">Search</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/playlists">Playlists</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/profile">Profile</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+    
+        <div id="Playlists" class="page">
+          <div class='play-container'>
+            <div class='list-view'>
+                <div class='playlists'>
+                  <div id='pl-items'>
+                    
+                  </div>
+                </div>
+                <div class='form-group'>
+                    <div class='pl-in-row'>
+                        <input id='pl-in-txt'  class='pl-input' placeholder='Playlist name' type="text">
+                        <button id='create' class="btn btn-outline-primary">Create</button>
+                    </div>
+                </div>
+            </div>
+            <div class="pl-content">
+                <div id="Content" class="pl-text"> 
+                    <div contentEditable="true" class="pl-name" id="pl-name"></div>
+                    <p contentEditable="true" class="pl-desc" id="pl-desc"></p>
+                    <button id='edit' class="btn btn-outline-primary">Save</button>
+                    <button id='delete' class="btn btn-outline-secondary"><i class="fa fa-trash-alt"></i></button>
+                </div>
+                <div class='pl-samples'>
+                  <table class='table table-bordered'>
+                    <tbody id='pl-sample-table'>
+        
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+          </div>
+        </div>
+</body>
+
+</html>
