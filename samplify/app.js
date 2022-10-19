@@ -11,6 +11,7 @@ const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
 const methodOverride = require('method-override');
+const cookieParser = require('cookie-parser');
 
 app.set('view engine', 'ejs');
 app.set('views','views');
@@ -26,6 +27,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname,'public')));
+app.use(cookieParser());
 
 app.use('/',routes);
 

@@ -50,6 +50,7 @@
                   </div>
               </div>
           
+              <form class='form-group' action='/search' method="POST" id="samples-form">
               <table id='search-table' class='table table-bordered'>
                   <thead class='thead-light'>
                       <tr>
@@ -65,13 +66,9 @@
 
               <div id="loader" style="display: none; padding-left:25px; padding-bottom:25px">Searching...</div>
           
-              <div class='form-group'>
-                  <select id="select-pl" class="custom-select">
-                      <option>Choose Playlist</option>
-                  </select>
-                  <output id="playlist" for="playlist-to-add"></output>
-                  <button id='add' class="btn btn-outline-primary">Add to playlist</button>
-              </div>
+              
+                  <button id='add' type="submit" class="btn btn-outline-primary">Add to playlist</button>
+            </form>
           </div>
         </div>
 </body>

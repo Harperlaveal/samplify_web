@@ -19,5 +19,4 @@ initializeApp({
 });
   
 const db = getFirestore();
-const user = db.collection("users");
-module.exports = user;
+module.exports = db;
