@@ -28,6 +28,7 @@ router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 // router.post('/login', controller.postLogin);
 
 const users=require('../firebase');
+const { getDocs } = require("firebase/firestore");
 
 const initializePassport = require('./passport-config');
 initializePassport(
@@ -58,7 +59,7 @@ router.delete('/logout', (req, res) => {
 })
 
 function checkAuthenticated(req, res, next) {
-    if (getCookie("uid")) {
+    if (checkEmail(req)) {
         return next()
     }
 
@@ -77,10 +78,11 @@ module.exports=router;
 /**
  * Check if the given email matches any in the users database, if so set the uid as a cookie
  */
- async function checkEmail() {
+ async function checkEmail(req) {
     const email = req.body.email;
     let emailFound = false;
-    users.forEach((doc) => {
+    const usersSnapshot = await getDocs(users);
+    usersSnapshot.forEach((doc) => {
         console.log(doc.id, " => ", doc.data().email);
         if(doc.data().email === email) {
             //setCookie("uid", doc.id, 3);
