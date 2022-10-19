@@ -16,7 +16,7 @@ router.get('/login', checkNotAuthenticated, controller.getLogin);
 
 router.get('/register', checkNotAuthenticated, controller.getSignin);
 
-router.get('/', controller.getIndex);
+router.get('/', checkAuthenticated, controller.getIndex);
 
 router.post('/search', () => {})
 
@@ -38,6 +38,7 @@ router.post('/login', (req,res) => {
             if(doc.data().email === email && result) {
                 res.cookie("uid", doc.id);
                 console.log("cookie set");
+                res.redirect('/');
                 res.send();
                 return;
             }
@@ -90,7 +91,10 @@ router.delete('/logout', (req, res) => {
 
 function checkAuthenticated(req, res, next) {
     if (checkCookie(req)) {
+        console.log("authenticated");
         return next()
+    }else {
+        console.log("not authenticated");
     }
 
     res.redirect('/login')
@@ -117,6 +121,7 @@ async function checkCookie(req) {
         }
         })
     })
+    console.log("no cookie found")
     return false;
 }
 
