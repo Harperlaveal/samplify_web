@@ -28,7 +28,6 @@ router.get('/', checkAuthenticated, controller.getIndex);
 // router.post('/login', controller.postLogin);
 
 const users=require('../firebase');
-const { getDocs } = require("firebase/firestore");
 
 const initializePassport = require('./passport-config');
 initializePassport(
@@ -81,14 +80,16 @@ module.exports=router;
  async function checkEmail(req) {
     const email = req.body.email;
     let emailFound = false;
-    const usersSnapshot = await getDocs(users);
-    usersSnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data().email);
-        if(doc.data().email === email) {
-            //setCookie("uid", doc.id, 3);
-            emailFound = true;
-        }
+    const usersSnapshot = users.get().then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+            console.log(doc.id, " => ", doc.data().email);
+            if(doc.data().email === email) {
+                //setCookie("uid", doc.id, 3);
+                emailFound = true;
+            }
+        })
     })
+    
 
     return emailFound;
 }
