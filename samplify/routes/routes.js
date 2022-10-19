@@ -4,30 +4,35 @@ const router = express.Router();
 const controller = require('../controller/controller');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
+const { v4: uuidv4 } = require('uuid');
 
-router.get('/search', checkAuthenticated, controller.getSearch);
+router.get('/search', controller.getSearch);
 
-router.get('/playlists', checkAuthenticated, controller.getPlaylists);
+router.get('/playlists', controller.getPlaylists);
 
-router.get('/profile', checkAuthenticated, controller.getProfile);
+router.get('/profile', controller.getProfile);
 
-router.get('/login', checkNotAuthenticated, controller.getLogin);
+router.get('/login', controller.getLogin);
 
-router.get('/register', checkNotAuthenticated, controller.getSignin);
+router.get('/register', controller.getSignin);
 
-router.get('/', checkAuthenticated, controller.getIndex);
+router.get('/', controller.getIndex);
+
+router.post('/search', () => {})
 
 // router.post('/register', controller.postSignUp);
 
-router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-  }))
+// router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+//     successRedirect: '/',
+//     failureRedirect: '/login',
+//     failureFlash: true
+//   }))
 
 // router.post('/login', controller.postLogin);
 
-const users=require('../firebase');
+const db=require('../firebase');
+const users=db.collection('users');
+const playlists=db.collection('playlists');
 
 const initializePassport = require('./passport-config');
 initializePassport(
@@ -39,10 +44,21 @@ initializePassport(
 router.post('/register', checkNotAuthenticated, async (req,res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const userid = uuidv4();
+        const plid = uuidv4();
         await users.add({
             name: req.body.username,
             email: req.body.email,
             password: hashedPassword,
+            id: userid,
+            plid: plid,
+        });
+        await playlists.add({
+            title: '',
+            description: '',
+            id: plid,
+            userid: userid,
+            samples: [],
         });
         res.redirect('/login');
     } catch {
