@@ -51,23 +51,29 @@
               </div>
           
               <form class='form-group' action='/search' method="POST" id="samples-form">
-              <table id='search-table' class='table table-bordered'>
-                  <thead class='thead-light'>
-                      <tr>
-                          <th>Title</th>
-                          <th>Artist</th>
-                          <th>Cover Art</th>
-                          <th>Select</th>
-                      </tr>
+                
+                <table id='search-table' class='table table-bordered'>
+                  <div id="showing-results" class="showing"></div>
+                  <thead id="table-header" class='thead-light'>
+                    <tr>
+                        <th>Title</th>
+                        <th>Artist</th>
+                        <th>Cover Art</th>
+                        <th>Select</th>
+                    </tr>
                   </thead>
                   <tbody id='samples' class='results'>
                   </tbody>
-              </table>
+                </table>
+                
+                <div id="loader" class="searching"><div class="loading-row">Finding samples <div class="loading-circle"></div></div></div>
 
-              <div id="loader" style="display: none; padding-left:25px; padding-bottom:25px">Searching...</div>
-          
-              
-                  <button id='add' type="submit" class="btn btn-outline-primary">Add to playlist</button>
+                <input readonly type="hidden" id="form-title" name="title" placeholder="Title" required>
+                <input readonly type="hidden" id="form-artist" name="artist" placeholder="Artist" required>
+                <input readonly type="hidden" id="form-img" name="img" placeholder="Img" required>
+
+
+                <button disabled id='add' type="submit" class="btn btn-outline-primary">Add to playlist</button>
             </form>
           </div>
         </div>

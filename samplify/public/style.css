@@ -246,3 +246,35 @@ body {
   align-items: center;
   background-color: rgba(13, 110, 253,.1);
 }
+
+.showing {
+  margin-left: 25px;
+  margin-bottom: 15px;
+  color: rgba(13, 110, 253,.9);
+}
+
+.loading-circle {
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid rgba(13, 110, 253,.9); /* Blue */
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  animation: spin 2s linear infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.searching {
+  display: none; 
+  padding-left:25px; 
+  padding-bottom:25px;
+}
+
+.loading-row{
+  display: flex;
+  flex-direction: row;
+}
