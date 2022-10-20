@@ -44,6 +44,20 @@ router.post('/search', async (req,res) => {
     }
 })
 
+router.post('/playlists', async (req,res) => {
+    try{
+        await db.collection('playlists').doc('vhEoZID4puRVRui7fBfk').update({
+            title: req.body.title,
+            description: req.body.desc
+        });
+        
+        res.redirect('/playlists');
+    }
+    catch{
+        res.redirect('/login');
+    }
+})
+
 router.post('/register', checkNotAuthenticated, async (req,res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
