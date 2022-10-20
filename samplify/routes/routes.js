@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 const { doc, getDoc, FieldValue } = require('firebase-admin/firestore');
 
+router.use(express.static(path.join(__dirname,'public')));
 
 router.get('/search', controller.getSearch);
 
@@ -19,6 +20,8 @@ router.get('/login', controller.getLogin);
 router.get('/register', controller.getSignin);
 
 router.get('/', controller.getIndex);
+
+router.get('/playlists/:username', controller.getPlaylistsDynamic)
 
 const db=require('../firebase');
 const users=db.collection('users');
@@ -33,7 +36,7 @@ initializePassport(
 
 router.post('/search', async (req,res) => {
     try{
-        await db.collection('playlists').doc('vhEoZID4puRVRui7fBfk').update({
+        await db.collection('playlists').doc('cMplNtDhhoXKXUBla6HJ').update({
             samples:FieldValue.arrayUnion(req.body),
         });
 
