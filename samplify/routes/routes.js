@@ -5,6 +5,9 @@ const controller = require('../controller/controller');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
+const { doc, getDoc, FieldValue } = require('firebase-admin/firestore');
+
+router.use(express.static(path.join(__dirname,'public')));
 
 router.get('/search', checkAuthenticated, controller.getSearch);
 
@@ -18,21 +21,12 @@ router.get('/register', checkNotAuthenticated, controller.getSignin);
 
 router.get('/', checkAuthenticated, controller.getIndex);
 
-router.post('/search', () => {})
+router.get('/playlists/:username', controller.getPlaylistsDynamic)
 
-// router.post('/register', controller.postSignUp);
-
-// router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-//     successRedirect: '/',
-//     failureRedirect: '/login',
-//     failureFlash: true
-//   }))
-
-router.post('/login', controller.postLogin());
+router.post('/login', controller.postLogin);
 
 const db=require('../firebase');
 const users=db.collection('users');
-const playlists=db.collection('playlists');
 
 const initializePassport = require('./passport-config');
 initializePassport(
@@ -42,6 +36,19 @@ initializePassport(
 )
 
 router.post('/register', checkNotAuthenticated, controller.postRegister);
+
+router.post('/search', async (req,res) => {
+    try{
+        await db.collection('playlists').doc('cMplNtDhhoXKXUBla6HJ').update({
+            samples:FieldValue.arrayUnion(req.body),
+        });
+
+        res.redirect('/search');
+    }
+    catch{
+        res.redirect('/login');
+    }
+})
 
 router.delete('/logout', (req, res) => {
     req.logout(function(err) {
@@ -87,22 +94,3 @@ async function checkCookie(req) {
     }
     return check;
 }
-
-// /**
-//  * Check if the given email matches any in the users database, if so set the uid as a cookie
-//  */
-//  async function checkEmail(req, res) {
-//     const email = req.body.email;
-//     const usersSnapshot = users.get().then(querySnapshot => {
-//         querySnapshot.forEach((doc) => {
-//             console.log(doc.id, " => ", doc.data().email);
-//             if(doc.data().email === email) {
-//                 res.cookie(uid, doc.id);
-//                 console.log("email match found");
-//             }
-//         })
-//     })
-    
-
-//     return emailFound;
-// }

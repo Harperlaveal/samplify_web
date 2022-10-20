@@ -26,8 +26,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));
-app.use(express.static(path.join(__dirname,'public')));
 app.use(cookieParser());
+app.use(express.static('public'))
+app.use('/playlists/', express.static('public'));
 
 app.use('/',routes);
 

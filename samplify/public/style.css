@@ -40,10 +40,18 @@
 .search-row {
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid #3a3a3a;
 }
 
 .search-input {
+  width:100%;
+}
+
+.search-play-row {
+  display: flex;
+  justify-content: left;
+}
+
+.search-play-i{
   width:100%;
 }
 
@@ -81,14 +89,9 @@
 .pl-content {
   margin-left:10px;
   width: 100%;
-  height: 300px;
   display: flex;
   flex-direction: row;
   background-color: white;
-  border-style: solid;
-  border-color: black;
-  border-width: 1px;
-  border-radius: 10px;
 }
 
 .pl-name {
@@ -117,13 +120,10 @@
 }
 
 .pl-samples {
-  height: 250px;
+  height: 350px;
   width: 100%;
   background-color: white;
   margin: 25px;
-  border-style: solid;
-  border-color: black;
-  border-width: 1px;
   overflow-y: auto;
 }
 
@@ -233,7 +233,7 @@
 
 #signup-button {
   width: 20%;
-  margin: 10px;
+  margin: 1px;
   cursor: pointer;
 }
 
@@ -246,3 +246,83 @@ body {
   align-items: center;
   background-color: rgba(13, 110, 253,.1);
 }
+
+.profile-table{
+  margin: 25px;
+}
+
+hr.solid{
+  border: 3px solid black;
+}
+
+#user-name{
+  margin:10px;
+  padding: 15px;
+}
+
+#email{
+  padding: 15px;
+}
+
+#errorMsg{
+  color:red;
+  text-align: center;
+  font-size: 12px;
+  padding-bottom: 20px;
+}
+
+.g-signin2{
+  padding: 15px;
+}
+.showing {
+  margin-left: 25px;
+  margin-bottom: 15px;
+  color: rgba(13, 110, 253,.9);
+}
+
+.loading-circle {
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid rgba(13, 110, 253,.9); /* Blue */
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  animation: spin 2s linear infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.searching {
+  display: none; 
+  padding-left:25px; 
+  padding-bottom:25px;
+}
+
+.loading-row{
+  display: flex;
+  flex-direction: row;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(13, 110, 253,.4); 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(13, 110, 253,.6); 
+}
+
