@@ -11,7 +11,7 @@ exports.getPlaylists = (req,res) => {
 }
 
 exports.getProfile = (req,res) => {
-    res.render('profile');
+    res.render('profile',{'name':'name', 'email':'email'});
 }
 
 exports.getLogin = (req,res) => {

@@ -36,6 +36,28 @@
 
         <div id="Profile" class="page">
           <div id="profile-container">
+            
+            <div id="user-info">
+              <h2 id="profile-title">User Info</h2>
+              <table class="profile-table">
+                <tr>
+                  <th id="user-name-title">
+                    Name:
+                  </th>
+                  <td id="user-name">
+                    <%= name %>
+                  </td>
+                </tr>
+                <hr class="soild">
+                <tr>
+                  <th id="email-title">Email:</th>
+                  <td id="email">
+                    <%= email %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            
           <form action="/logout?_method=DELETE" method="POST">
             <button class="btn btn-primary" type="submit">Log Out</button>
           </form>
