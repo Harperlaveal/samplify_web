@@ -23,6 +23,8 @@ router.get('/', controller.getIndex);
 
 router.get('/playlists/:username', controller.getPlaylistsDynamic)
 
+//router.get('/playlists/:songname', controller.getPlaylistsDynamic)
+
 const db=require('../firebase');
 const users=db.collection('users');
 const playlists=db.collection('playlists');
