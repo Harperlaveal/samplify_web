@@ -1,3 +1,8 @@
+const { doc, getDoc, FieldValue } = require('firebase-admin/firestore');
+const db=require('../firebase');
+const users=db.collection('users');
+const playlists=db.collection('playlists');
+
 exports.getIndex = (req,res)=>{
     res.render('index',{'pageTitle':'Samplify'});
 }
@@ -22,8 +27,24 @@ exports.getSignin = (req,res) => {
     res.render('register',{'pageTitle':'Signin'});
 }
 
-exports.getPlaylistsDynamic = (req,res) => {
-    const pid = req.params.pid;
-    console.log(pid);
-    //res.render('playlists',{'user':playlists.search(pid)})
+exports.getPlaylistsDynamic = async (req,res) => {
+    const playshot = await playlists.where('user', '==', req.params.username).get();
+    var title = "title";
+    var desc= "desc";
+    var samples = [];
+
+    if(!playshot.empty){
+        playshot.forEach(doc => {
+            title = doc.data().title;
+            desc= doc.data().description;
+            samples = doc.data().samples;
+        });
+    
+        res.render('dynamic-list',{'samples': samples, 'username':req.params.username,'title':title, 'description':desc});
+    }
+    else{
+        res.redirect('/search');
+    }
+
+    
 }
