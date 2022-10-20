@@ -9,36 +9,23 @@ function init(){
 }
 
 function bindEvents(){
-    document.querySelector('#search').addEventListener('click', getSamplesFromSong);
-    document.querySelector('#add').addEventListener('click', addSamplesToPlaylist);
-}
-
-function addSamplesToPlaylist(){
-    var select = document.getElementById("select-pl");
-    var value = select.value;
-
-    console.log(value);
-
-    let pl = playlistOperations.search(value);
-
-    if(pl!=null){
-        resultOperations.removeResults();
-        sel = resultOperations.getSelected();
-        for(let i = 0; i<sel.length; i++){
-            playlistOperations.addSong(sel[i], pl);
+    document.querySelector('#song').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          getSamplesFromSong();
         }
-        resultOperations.clearSelected();
-        document.querySelector('#samples').innerHTML = null;
-        displaySamples();
-    }
+    });
+    document.querySelector('#search').addEventListener('click', getSamplesFromSong);
 }
 
 async function getSamplesFromSong(){
+    document.querySelector('#samples').innerHTML = null;
+    document.querySelector('#showing-results').innerHTML = null;
+    resultOperations.clearResults();
+    document.getElementById("add").disabled = true;
     let search = document.getElementById("song").value;
     if(search.trim().length != 0){
         console.log(search);
         let id;
-        let sample;
         const options = {
             method: 'GET',
             headers: {
@@ -46,8 +33,7 @@ async function getSamplesFromSong(){
                 'X-RapidAPI-Host': 'genius.p.rapidapi.com'
             }
         };
-        resultOperations.clearResults();
-        document.querySelector('#samples').innerHTML = null;
+        
         const loader = document.querySelector('#loader');
         loader.style.display = 'block';
         await fetch('https://genius.p.rapidapi.com/search?q=' + search, options)
@@ -59,14 +45,19 @@ async function getSamplesFromSong(){
                 .then(data => readSamples(data))
                 .catch(err => console.error(err));
     }
-    else{
-        resultOperations.clearResults();
-        document.querySelector('#samples').innerHTML = null;
-    }
 }
 
 function readSamples(data){
+    document.querySelector('#samples').innerHTML = null;
+    document.querySelector('#showing-results').innerHTML = null;
     let samples = data['response']['song']['song_relationships']['0']['songs'];
+
+    let full_title = data['response']['song']['full_title'];
+
+    var showing = document.createElement("div");
+    showing.innerText = "Showing samples used in: " +  full_title;
+    document.getElementById("showing-results").appendChild(showing);
+
 
     if(samples.length!=0){
         for(let i = 0; i<samples.length; i++){
@@ -78,11 +69,12 @@ function readSamples(data){
             samp['id'] = sample['id'];
 
             resultOperations.addResult(samp);
+
+            displaySample(samp);
         }
-        
-        displaySamples();
         const loader = document.querySelector('#loader');
         loader.style.display = 'none';
+
         document.getElementById("song").value = null;
     }
     else{
@@ -138,7 +130,23 @@ function createSelect(id){
 
 function toggle(){
     let id = this.getAttribute('data-itemid');
-    resultOperations.toggleResult(id);
     let tr = this.parentNode.parentNode;
-    tr.classList.toggle('alert-primary');
+    let selected = resultOperations.search(id);
+    if(!selected.isSelected){
+        var table = document.getElementById("search-table");
+        for (var i = 0, row; row = table.rows[i]; i++) {
+            row.setAttribute("class", "table-default");
+        }
+        tr.setAttribute("class", "table-primary");
+
+        document.getElementById('form-title').value = selected.title;
+        document.getElementById('form-artist').value = selected.artist;
+        document.getElementById('form-img').value = selected.imgUrl;
+        document.getElementById("add").disabled = false;
+    }
+    else{
+        tr.setAttribute("class", "table-default");
+        document.getElementById("add").disabled = true;
+    }
+    resultOperations.toggleResult(id);
 }
