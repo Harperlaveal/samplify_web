@@ -5,6 +5,8 @@ const controller = require('../controller/controller');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
+const { doc, getDoc, FieldValue } = require('firebase-admin/firestore');
+
 
 router.get('/search', controller.getSearch);
 
@@ -18,18 +20,6 @@ router.get('/register', controller.getSignin);
 
 router.get('/', controller.getIndex);
 
-router.post('/search', () => {})
-
-// router.post('/register', controller.postSignUp);
-
-// router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-//     successRedirect: '/',
-//     failureRedirect: '/login',
-//     failureFlash: true
-//   }))
-
-// router.post('/login', controller.postLogin);
-
 const db=require('../firebase');
 const users=db.collection('users');
 const playlists=db.collection('playlists');
@@ -40,6 +30,19 @@ initializePassport(
   email => users.find(user => user.email === email),
   id => users.find(user => user.id === id)
 )
+
+router.post('/search', async (req,res) => {
+    try{
+        await db.collection('playlists').doc('vhEoZID4puRVRui7fBfk').update({
+            samples:FieldValue.arrayUnion(req.body),
+        });
+
+        res.redirect('/search');
+    }
+    catch{
+        res.redirect('/login');
+    }
+})
 
 router.post('/register', checkNotAuthenticated, async (req,res) => {
     try {
