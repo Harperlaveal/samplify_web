@@ -41,7 +41,7 @@ initializePassport(
   id => users.find(user => user.id === id)
 )
 
-router.post('/register', checkNotAuthenticated, 
+router.post('/register', checkNotAuthenticated, controller.postRegister);
 
 router.delete('/logout', (req, res) => {
     req.logout(function(err) {
