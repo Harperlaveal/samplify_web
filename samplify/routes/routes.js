@@ -28,10 +28,10 @@ router.post('/search', () => {})
 //     failureFlash: true
 //   }))
 
-router.post('/login', (req,res) => {
+router.post('/login', async (req,res) => {
     const email = req.body.email;
     const password = req.body.password;
-    const usersSnapshot = users.get().then(querySnapshot => {
+    await users.get().then(querySnapshot => {
         querySnapshot.forEach((doc) => {
             console.log(doc.id, " => ", doc.data().email);
             const result = bcrypt.compareSync(password, doc.data().password);
@@ -76,9 +76,9 @@ router.post('/register', checkNotAuthenticated, async (req,res) => {
             userid: userid,
             samples: [],
         });
-        res.redirect('/login');
+        return res.redirect('/login');
     } catch {
-        res.redirect('/register');
+        return res.redirect('/register');
     }
 })
 
@@ -89,22 +89,20 @@ router.delete('/logout', (req, res) => {
       });
 })
 
-function checkAuthenticated(req, res, next) {
-    if (checkCookie(req)) {
+async function checkAuthenticated(req, res, next) {
+    if (await checkCookie(req) ) {
         console.log("authenticated");
-        return next()
-    }else {
-        console.log("not authenticated");
+        return next();
     }
-
-    res.redirect('/login')
+    console.log("not authenticated");
+    res.redirect('/login');
 }
 
-function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return res.redirect('/')
+async function checkNotAuthenticated(req, res, next) {
+    if (await checkCookie(req)){
+        return res.redirect('/');
     }
-    next()
+    next();
 }
 
 module.exports=router;
@@ -113,16 +111,20 @@ module.exports=router;
  * Method to check if a response contains a valid cookie
  */
 async function checkCookie(req) {
-    const usersSnapshot = users.get().then(querySnapshot => {
+    let check = false;
+    await users.get().then(querySnapshot => {
+
     querySnapshot.forEach((doc) => {
         if(doc.id == req.cookies.uid) {
             console.log("cookie found")
-            return true;
-        }
+            check = true;
+            }
         })
     })
-    console.log("no cookie found")
-    return false;
+    if(check === false) {
+        console.log("cookie not found");
+    }
+    return check;
 }
 
 // /**
