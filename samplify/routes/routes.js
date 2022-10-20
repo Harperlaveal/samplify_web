@@ -28,23 +28,7 @@ router.post('/search', () => {})
 //     failureFlash: true
 //   }))
 
-router.post('/login', async (req,res) => {
-    const email = req.body.email;
-    const password = req.body.password;
-    await users.get().then(querySnapshot => {
-        querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data().email);
-            const result = bcrypt.compareSync(password, doc.data().password);
-            if(doc.data().email === email && result) {
-                res.cookie("uid", doc.id);
-                console.log("cookie set");
-                res.redirect('/');
-                res.send();
-                return;
-            }
-        })
-    })
-});
+router.post('/login', controller.postLogin());
 
 const db=require('../firebase');
 const users=db.collection('users');
@@ -57,30 +41,7 @@ initializePassport(
   id => users.find(user => user.id === id)
 )
 
-router.post('/register', checkNotAuthenticated, async (req,res) => {
-    try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const userid = uuidv4();
-        const plid = uuidv4();
-        await users.add({
-            name: req.body.username,
-            email: req.body.email,
-            password: hashedPassword,
-            id: userid,
-            plid: plid,
-        });
-        await playlists.add({
-            title: '',
-            description: '',
-            id: plid,
-            userid: userid,
-            samples: [],
-        });
-        return res.redirect('/login');
-    } catch {
-        return res.redirect('/register');
-    }
-})
+router.post('/register', checkNotAuthenticated, 
 
 router.delete('/logout', (req, res) => {
     req.logout(function(err) {
