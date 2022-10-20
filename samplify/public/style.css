@@ -233,7 +233,7 @@
 
 #signup-button {
   width: 20%;
-  margin: 10px;
+  margin: 1px;
   cursor: pointer;
 }
 
@@ -272,8 +272,7 @@ hr.solid{
 }
 
 .g-signin2{
-  padding: 25px;
-  
+  padding: 15px;
 }
 .showing {
   margin-left: 25px;
