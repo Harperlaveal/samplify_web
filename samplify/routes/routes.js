@@ -9,6 +9,8 @@ router.use(express.static(path.join(__dirname,'public')));
 
 router.get('/search', checkAuthenticated, controller.getSearch);
 
+router.get('/not-search', checkNotAuthenticated, controller.unauthSearch);
+
 router.get('/playlists', checkAuthenticated, controller.getPlaylists);
 
 router.get('/profile', checkAuthenticated, controller.getProfile);
@@ -19,7 +21,9 @@ router.get('/register', checkNotAuthenticated, controller.getSignin);
 
 router.get('/', checkAuthenticated, controller.getIndex);
 
-router.get('/playlists/:username', controller.getPlaylistsDynamic)
+router.get('/playlists/:username', controller.getPlaylistsDynamic);
+
+router.get('/json/:username', controller.getJson);
 
 router.post('/login', controller.postLogin);
 

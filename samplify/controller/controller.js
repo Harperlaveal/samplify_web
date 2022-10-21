@@ -12,6 +12,11 @@ exports.getSearch = (req,res) =>{
     res.render('search',{'pageTitle':'Search'});
 }
 
+exports.unauthSearch = (req,res) =>{
+    res.render('not-search',{'pageTitle':'Search'});
+}
+
+
 exports.getPlaylists = async (req,res) => {
     try{
         const userdoc = await users.doc(req.cookies.uid).get();
@@ -40,11 +45,30 @@ exports.getPlaylistsDynamic = async (req,res) => {
             desc= doc.data().description;
             samples = doc.data().samples;
         });
-    
         res.render('dynamic-list',{'samples': samples, 'username':req.params.username,'title':title, 'description':desc});
     }
     else{
         res.redirect('/search');
+    }
+}
+
+exports.getJson = async (req,res) => {
+    const playshot = await playlists.where('name', '==', req.params.username).get();
+    var title = "title";
+    var desc= "desc";
+    var samples = [];
+    if(!playshot.empty){
+        playshot.forEach(doc => {
+            title = doc.data().title;
+            desc= doc.data().description;
+            samples = doc.data().samples;
+        });
+        let playlist = {
+            title: title,
+            desc: desc,
+            samples: samples
+        }
+        res.status(200).json(playlist);
     }
 }
 
@@ -67,6 +91,8 @@ exports.getLogin = (req,res) => {
 exports.getSignin = (req,res) => {
     res.render('register',{'pageTitle':'Signin'});
 }
+
+
 
 exports.postLogin = async (req,res) => {
     const email = req.body.email;
