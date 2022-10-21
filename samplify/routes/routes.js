@@ -50,6 +50,20 @@ router.post('/search', async (req,res) => {
     }
 })
 
+router.post('/playlists', async (req,res) => {
+    try{
+        await db.collection('playlists').doc('vhEoZID4puRVRui7fBfk').update({
+            title: req.body.title,
+            description: req.body.desc
+        });
+        
+        res.redirect('/playlists');
+    }
+    catch{
+        res.redirect('/login');
+    }
+})
+
 router.delete('/logout', (req, res) => {
     req.logout(function(err) {
         if (err) { return next(err); }
