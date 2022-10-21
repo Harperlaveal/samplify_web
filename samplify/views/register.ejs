@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="logo.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Samplify</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <script type="text/javascript">
+      function validateSignupForm(){
+        var email = document.getElementById("email-field").value
+        var password = document.getElementById("password-field").value;
+
+        if (email == "" || password == "") {
+            document.getElementById("errorMsg").innerHTML = "Please fill in the required inputs";
+            return false;
+            }
+        else if (password.length < 8) {
+            document.getElementById("errorMsg").innerHTML = "Your password isn't long enough";
+            return false;
+        }
+        else {
+            alert("Successfully signed up!");
+            return true;
+        }
+}
+    </script>
+</head>
+
+<body>
+    <div class='container'>
+        <div class='header'>
+            <h1 class='header-text'>Sign Up</h1>
+        </div>
+        <div id="errorMsg"></div>
+        <div id="Profile" class="page">
+          <div id="login-container">
+              <form action='/register' onsubmit = "validateSignupForm()" method="POST" id="login-form">
+                <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username" required>
+                <input type="text" name="email" id="email-field" class="login-form-field" placeholder="Email" required>
+                <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password" required>
+                <input type="submit" class="btn btn-primary" value="Signup" id="signup-button">
+                <a href="/login">Back</a>
+              </form>
+          </div>
+        </div> 
+</body>
+
+</html>

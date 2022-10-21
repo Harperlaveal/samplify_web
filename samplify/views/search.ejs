@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="logo.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Samplify</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="module" src="src/PlaylistController.js"></script>
+    <script type="module" src="src/LoginController.js"></script>
+    <script src="src/SearchController.js"></script>
+    <script src="src/PlaylistObject.js"></script>
+    <script src="src/PlaylistOperations.js"></script>
+    <script src="src/SampleObject.js"></script>
+    <script src="src/ResultOperations.js"></script>
+</head>
+
+<body>
+    <div class='container'>
+        <div class='header'>
+            <h1 class='header-text'>Samplify<i class="fa fa-music"></i></h1>
+        </div>
+        <nav class="navbar navbar-expand-sm bg-light">
+            <div class="container-fluid">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link active" href="/search">Search</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/playlists">Playlists</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/profile">Profile</a>
+                </li>
+              </ul>
+                <div class='search-play-row'>
+                    <input id='search-user-i'  class='search-play-i' placeholder='Search user' type="text">
+                    <button id='search-playlist' class="btn btn-outline-secondary" type="search"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </nav>
+
+        <div id="Search" class="page">
+            <div class='search-container'>
+              <div class='form-group'>
+                  <div class='search-row'>
+                      <input id='song'  class='search-input' placeholder='Search song' type="text">
+                      <button id='search' class="btn btn-outline-primary" type="search"><i class="fa fa-search"></i></button>
+                  </div>
+              </div>
+          
+              <form class='form-group' action='/search' method="POST" id="samples-form">
+                
+                <table id='search-table' class='table table-bordered'>
+                  <div id="showing-results" class="showing"></div>
+                  <thead id="table-header" class='thead-light'>
+                    <tr>
+                        <th>Title</th>
+                        <th>Artist</th>
+                        <th>Cover Art</th>
+                        <th>Select</th>
+                    </tr>
+                  </thead>
+                  <tbody id='samples' class='results'>
+                  </tbody>
+                </table>
+                
+                <div id="loader" class="searching"><div class="loading-row">Finding samples <div class="loading-circle"></div></div></div>
+
+                <input readonly type="hidden" id="form-title" name="title" placeholder="Title" required>
+                <input readonly type="hidden" id="form-artist" name="artist" placeholder="Artist" required>
+                <input readonly type="hidden" id="form-img" name="img" placeholder="Img" required>
+
+
+                <button disabled id='add' type="submit" class="btn btn-outline-primary">Add to playlist</button>
+            </form>
+          </div>
+        </div>
+</body>
+
+</html>

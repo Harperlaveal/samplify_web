@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="logo.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-signin-client_id" content = "652393832749-duv8e7tdo3l58jvnnhunb58pgtm6j5bm.apps.googleusercontent.com">
+    <title>Samplify</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="module" src="src/LoginController.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer>
+    </script>
+</head>
+
+<body>
+  <script>
+    function onSignIn(googleUser) {
+      //Gets user profile information.
+      console.log(googleUser.getBasicProfile())
+    }
+  </script>
+    <div class='container'>
+        <div class='header'>
+            <h1 class='header-text'>Login</h1>
+        </div>
+
+        <nav class="navbar navbar-expand-sm bg-light">
+          <div class="container-fluid">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" href="/search">Search</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+            </ul>
+          </div>
+      </nav>
+
+        <div id="Profile" class="page">
+          <div id="login-container">
+            <% if (messages.error) { %>
+              <%= messages.error %>
+            <% } %>
+            <form action='/login' method="POST" id="login-form">
+              <input type="text" name="email" id="email-field" class="login-form-field" placeholder="Email" required>
+              <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password" required>
+              <input type="submit" class="btn btn-primary" value="Login" id="login-form-submit">
+              <div class="g-signin2" data-onsuccess="omSignIn"></div>
+              <a href="/register">Signup</a>
+            </form>
+          </div>
+        </div>
+        
+</body>
+
+</html>

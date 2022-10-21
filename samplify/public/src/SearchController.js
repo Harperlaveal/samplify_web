@@ -9,71 +9,95 @@ function init(){
 }
 
 function bindEvents(){
+    document.querySelector('#song').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          getSamplesFromSong();
+        }
+    });
     document.querySelector('#search').addEventListener('click', getSamplesFromSong);
-    document.querySelector('#add').addEventListener('click', addSamplesToPlaylist);
+    document.querySelector('#search-playlist').addEventListener('click', getPlaylistPage);
 }
 
-function addSamplesToPlaylist(){
-    var select = document.getElementById("select-pl");
-    var value = select.value;
-
-    console.log(value);
-
-    let pl = playlistOperations.search(value);
-
-    if(pl!=null){
-        resultOperations.removeResults();
-        sel = resultOperations.getSelected();
-        for(let i = 0; i<sel.length; i++){
-            playlistOperations.addSong(sel[i], pl);
-        }
-        resultOperations.clearSelected();
-        displaySamples();
-    }
+async function getPlaylistPage(){
+    let search = document.getElementById("search-user-i").value;
+    window.location.replace('http://localhost:3000/playlists/' + search);
 }
 
 async function getSamplesFromSong(){
+    document.querySelector('#samples').innerHTML = null;
+    document.querySelector('#showing-results').innerHTML = null;
+    resultOperations.clearResults();
+    document.getElementById("add").disabled = true;
     let search = document.getElementById("song").value;
-    console.log(search);
-    let id;
-    let sample;
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '08849a9ebamsha5f40676fc1520ep15a0a1jsn99c58874253f',
-            'X-RapidAPI-Host': 'genius.p.rapidapi.com'
-        }
-    };
-    await fetch('https://genius.p.rapidapi.com/search?q=' + search, options)
-        .then(response => response.json())
-        .then(data => id = data['response']['hits']['0']['result']['id'])
-        .catch(err => console.error(err));
-        fetch('https://genius.p.rapidapi.com/songs/' + id, options)
-	        .then(response => response.json())
-	        .then(data => readSamples(data))
-	        .catch(err => console.error(err));
+    if(search.trim().length != 0){
+        console.log(search);
+        let id;
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': '08849a9ebamsha5f40676fc1520ep15a0a1jsn99c58874253f',
+                'X-RapidAPI-Host': 'genius.p.rapidapi.com'
+            }
+        };
+        
+        const loader = document.querySelector('#loader');
+        loader.style.display = 'block';
+        await fetch('https://genius.p.rapidapi.com/search?q=' + search, options)
+            .then(response => response.json())
+            .then(data => id = data['response']['hits']['0']['result']['id'])
+            .catch(err => console.error(err));
+            fetch('https://genius.p.rapidapi.com/songs/' + id, options)
+                .then(response => response.json())
+                .then(data => readSamples(data))
+                .catch(err => console.error(err));
+    }
 }
 
 function readSamples(data){
     document.querySelector('#samples').innerHTML = null;
+    document.querySelector('#showing-results').innerHTML = null;
     let samples = data['response']['song']['song_relationships']['0']['songs'];
 
-    for(let i = 0; i<samples.length; i++){
-        let sample = samples[i];
-        let samp = new Sample();
-        samp['title'] = sample['title'];
-        samp['artist'] = sample['artist_names'];
-        samp['imgUrl'] = sample['header_image_thumbnail_url'];
-        samp['id'] = sample['id'];
+    let full_title = data['response']['song']['full_title'];
 
-        resultOperations.addResult(samp);
+    var showing = document.createElement("div");
+    showing.innerText = "Showing samples used in: " +  full_title;
+    document.getElementById("showing-results").appendChild(showing);
+
+
+    if(samples.length!=0){
+        for(let i = 0; i<samples.length; i++){
+            let sample = samples[i];
+            let samp = new Sample();
+            samp['title'] = sample['title'];
+            samp['artist'] = sample['artist_names'];
+            samp['imgUrl'] = sample['header_image_thumbnail_url'];
+            samp['id'] = sample['id'];
+
+            resultOperations.addResult(samp);
+
+            displaySample(samp);
+        }
+        const loader = document.querySelector('#loader');
+        loader.style.display = 'none';
+
+        document.getElementById("song").value = null;
     }
-    
-    displaySamples();
+    else{
+        noSamples();
+    }
+}
+
+function noSamples(){
+    const loader = document.querySelector('#loader');
+    loader.style.display = 'none';
+    var tag = document.createElement("div");
+    tag.innerHTML = "No samples found :(";
+    tag.setAttribute("style","padding:25px;")
+    document.querySelector('#samples').appendChild(tag);
 }
 
 function displaySamples(){
-    document.querySelector('#samples').innerHTML = null;
     let list = resultOperations.getResults();
     for(let i = 0; i<list.length; i++){
         sample = list[i];
@@ -112,7 +136,23 @@ function createSelect(id){
 
 function toggle(){
     let id = this.getAttribute('data-itemid');
-    resultOperations.toggleResult(id);
     let tr = this.parentNode.parentNode;
-    tr.classList.toggle('alert-success');
+    let selected = resultOperations.search(id);
+    if(!selected.isSelected){
+        var table = document.getElementById("search-table");
+        for (var i = 0, row; row = table.rows[i]; i++) {
+            row.setAttribute("class", "table-default");
+        }
+        tr.setAttribute("class", "table-primary");
+
+        document.getElementById('form-title').value = selected.title;
+        document.getElementById('form-artist').value = selected.artist;
+        document.getElementById('form-img').value = selected.imgUrl;
+        document.getElementById("add").disabled = false;
+    }
+    else{
+        tr.setAttribute("class", "table-default");
+        document.getElementById("add").disabled = true;
+    }
+    resultOperations.toggleResult(id);
 }

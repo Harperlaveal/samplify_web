@@ -16,8 +16,8 @@ const resultOperations = {
     },
     search(id){
         /* searches the result with given id */
-        for(i = 0; i<this.playlists.length; i++){
-            re = this.playlists[i];
+        for(i = 0; i<this.results.length; i++){
+            re = this.results[i];
             if(re.id == id){
                 return re;
             }
@@ -33,12 +33,17 @@ const resultOperations = {
     clearSelected(){
         this.selected = [];
     },
+    clearResults(){
+        this.results = [];
+    },
     toggleResult(id){
         for(i = 0; i<this.results.length; i++){
             re = this.results[i];
             if(re.id == id){
                 re.isSelected = !re.isSelected;
-                break;
+            }
+            else{
+                re.isSelected = false;
             }
         }
     }
