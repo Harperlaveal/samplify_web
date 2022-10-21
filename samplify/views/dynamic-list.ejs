@@ -44,6 +44,9 @@
                 <div class='pl-samples'>
                   <table class='table table-bordered'>
                     <tbody id='pl-sample-table'>
+                      <% if(samples.length==0) { %>
+                        <div>This user has no samples</div>
+                      <% } %>
                       <% for (var i = 0; i < samples.length; i++) { %>
                         <tr>
                           <td><%= samples[i].title %></td>
