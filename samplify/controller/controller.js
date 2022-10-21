@@ -48,8 +48,16 @@ exports.getPlaylistsDynamic = async (req,res) => {
     }
 }
 
-exports.getProfile = (req,res) => {
-    res.render('profile',{'name':'name', 'email':'email'});
+exports.getProfile = async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.cookies.uid).get();
+        var name = userdoc.data().name;
+        var email = userdoc.data().email;
+        res.render('profile',{'name':name, 'email':email}); 
+    }
+    catch{
+        res.redirect('/');
+    }
 }
 
 exports.getLogin = (req,res) => {
