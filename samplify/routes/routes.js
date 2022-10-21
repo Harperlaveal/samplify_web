@@ -55,6 +55,20 @@ router.post('/search', async (req,res) => {
     }
 })
 
+router.post('/json/:username', async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.body.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
+            title: req.body.title,
+            description: req.body.desc
+        });
+        res.status(201).json({ status: 'updating', message: 'tried to update data' });
+    } catch {
+        res.status(401).json({ status: 'failure', message: 'Data Not Added.' });
+    }
+});
+
 router.post('/playlists/edit', async (req,res) => {
     try{
         const userdoc = await users.doc(req.cookies.uid).get();
