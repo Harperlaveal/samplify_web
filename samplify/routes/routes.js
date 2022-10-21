@@ -21,7 +21,9 @@ router.get('/register', checkNotAuthenticated, controller.getSignin);
 
 router.get('/', checkAuthenticated, controller.getIndex);
 
-router.get('/playlists/:username', controller.getPlaylistsDynamic)
+router.get('/playlists/:username', controller.getPlaylistsDynamic);
+
+router.get('/json/:username', controller.getJson);
 
 router.post('/login', controller.postLogin);
 
