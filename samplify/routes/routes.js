@@ -25,7 +25,6 @@ router.post('/login', controller.postLogin);
 
 const db=require('../firebase');
 const users=db.collection('users');
-
 const initializePassport = require('./passport-config');
 initializePassport(
   passport,
