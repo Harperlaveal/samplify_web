@@ -51,7 +51,9 @@ router.post('/search', async (req,res) => {
 
 router.post('/playlists', async (req,res) => {
     try{
-        await db.collection('playlists').doc('vhEoZID4puRVRui7fBfk').update({
+        const userdoc = await users.doc(req.cookies.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
             title: req.body.title,
             description: req.body.desc
         });
