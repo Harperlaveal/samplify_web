@@ -33,11 +33,9 @@ exports.postLogin = async (req,res) => {
     const password = req.body.password;
     await users.get().then(querySnapshot => {
         querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data().email);
             const result = bcrypt.compareSync(password, doc.data().password);
             if(doc.data().email === email && result) {
-                res.cookie("uid", doc.id);
-                console.log("cookie set");
+                res.cookie("uid", doc.id, {expires: new Date(Date.now() + 172800000)}); // cookie will expire after 2 days
                 res.redirect('/');
                 res.send();
                 return;
@@ -71,6 +69,12 @@ exports.postRegister = async (req,res) => {
     } catch {
         return res.redirect('/register');
     }
+}
+
+exports.postSignout = async (req,res, next) => {
+    console.log("signing out");
+    res.clearCookie("uid");
+    res.redirect('/');
 }
 
 exports.getPlaylistsDynamic = async (req,res) => {

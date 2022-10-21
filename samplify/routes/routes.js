@@ -35,6 +35,8 @@ initializePassport(
 
 router.post('/register', checkNotAuthenticated, controller.postRegister);
 
+router.post('/profile', controller.postSignout);
+
 router.post('/search', async (req,res) => {
     try{
         const userdoc = await users.doc(req.cookies.uid).get();
