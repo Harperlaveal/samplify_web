@@ -3,9 +3,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controller/controller');
 const passport = require('passport');
-const bcrypt = require('bcrypt');
-const { v4: uuidv4 } = require('uuid');
-const { doc, getDoc, FieldValue } = require('firebase-admin/firestore');
+const { FieldValue } = require('firebase-admin/firestore');
 
 router.use(express.static(path.join(__dirname,'public')));
 
@@ -39,7 +37,9 @@ router.post('/register', checkNotAuthenticated, controller.postRegister);
 
 router.post('/search', async (req,res) => {
     try{
-        await db.collection('playlists').doc('cMplNtDhhoXKXUBla6HJ').update({
+        const userdoc = await users.doc(req.cookies.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
             samples:FieldValue.arrayUnion(req.body),
         });
 

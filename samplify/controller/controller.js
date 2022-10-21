@@ -1,7 +1,8 @@
-const { doc, getDoc, FieldValue } = require('firebase-admin/firestore');
 const db=require('../firebase');
 const users=db.collection('users');
 const playlists=db.collection('playlists');
+const bcrypt = require('bcrypt');
+const { v4: uuidv4 } = require('uuid');
 
 exports.getIndex = (req,res)=>{
     res.render('index',{'pageTitle':'Samplify'});
@@ -48,19 +49,21 @@ exports.postLogin = async (req,res) => {
 exports.postRegister = async (req,res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const userid = uuidv4();
-        const plid = uuidv4();
-        await users.add({
+        const userid = uuidv4().replace(/-/g, "");
+        const plid = uuidv4().replace(/-/g, "");
+
+        await users.doc(userid).set({
             name: req.body.username,
             email: req.body.email,
             password: hashedPassword,
-            id: userid,
             plid: plid,
         });
-        await playlists.add({
+        const  userdoc = await users.doc(userid).get();
+
+        await playlists.doc(plid).set({
             title: '',
             description: '',
-            id: plid,
+            name: userdoc.data().name,
             userid: userid,
             samples: [],
         });
@@ -71,7 +74,7 @@ exports.postRegister = async (req,res) => {
 }
 
 exports.getPlaylistsDynamic = async (req,res) => {
-    const playshot = await playlists.where('user', '==', req.params.username).get();
+    const playshot = await playlists.where('name', '==', req.params.username).get();
     var title = "title";
     var desc= "desc";
     var samples = [];
