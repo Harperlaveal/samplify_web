@@ -28,7 +28,6 @@ router.get('/playlists/:username', controller.getPlaylistsDynamic)
 const db=require('../firebase');
 const users=db.collection('users');
 const playlists=db.collection('playlists');
-
 const initializePassport = require('./passport-config');
 initializePassport(
   passport,
@@ -68,7 +67,7 @@ router.post('/register', checkNotAuthenticated, async (req,res) => {
             userid: userid,
             samples: [],
         });
-        res.redirect('/login');
+        res.redirect('/login');   
     } catch {
         res.redirect('/register');
     }
