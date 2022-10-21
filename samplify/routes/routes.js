@@ -7,17 +7,17 @@ const { FieldValue } = require('firebase-admin/firestore');
 
 router.use(express.static(path.join(__dirname,'public')));
 
-router.get('/search', checkAuthenticated, controller.getSearch);
+router.get('/search', checkSessionID, checkAuthenticated, controller.getSearch);
 
-router.get('/playlists', checkAuthenticated, controller.getPlaylists);
+router.get('/playlists', checkSessionID, checkAuthenticated, controller.getPlaylists);
 
-router.get('/profile', checkAuthenticated, controller.getProfile);
+router.get('/profile', checkSessionID, checkAuthenticated, controller.getProfile);
 
 router.get('/login', checkNotAuthenticated, controller.getLogin);
 
 router.get('/register', checkNotAuthenticated, controller.getSignin);
 
-router.get('/', checkAuthenticated, controller.getIndex);
+router.get('/', checkSessionID, checkAuthenticated, controller.getIndex);
 
 router.get('/playlists/:username', controller.getPlaylistsDynamic)
 
@@ -104,4 +104,23 @@ async function checkCookie(req) {
         })
     })
     return check;
+}
+
+/**
+ * Method to check if session id exists
+ */
+async function checkSessionID(req, res, next) {
+    let check = false;
+    if(req.cookies.sid) {
+        check = true;
+    }
+    if(check) {
+        console.log("session ID found");
+        next();
+
+    } else {
+        console.log("no session ID found");
+        res.clearCookie("uid");
+        return res.redirect('/');
+    }
 }

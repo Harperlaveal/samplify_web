@@ -28,28 +28,16 @@ exports.getPlaylists = async (req,res) => {
     }
 }
 
-exports.getPlaylistsDynamic = async (req,res) => {
-    const playshot = await playlists.where('name', '==', req.params.username).get();
-    var title = "title";
-    var desc= "desc";
-    var samples = [];
-
-    if(!playshot.empty){
-        playshot.forEach(doc => {
-            title = doc.data().title;
-            desc= doc.data().description;
-            samples = doc.data().samples;
-        });
-    
-        res.render('dynamic-list',{'samples': samples, 'username':req.params.username,'title':title, 'description':desc});
+exports.getProfile = async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.cookies.uid).get();
+        var name = userdoc.data().name;
+        var email = userdoc.data().email;
+        res.render('profile',{'name':name, 'email':email}); 
     }
-    else{
-        res.redirect('/search');
+    catch{
+        res.redirect('/');
     }
-}
-
-exports.getProfile = (req,res) => {
-    res.render('profile',{'name':'name', 'email':'email'});
 }
 
 exports.getLogin = (req,res) => {
@@ -107,4 +95,26 @@ exports.postSignout = async (req,res, next) => {
     console.log("signing out");
     res.clearCookie("uid");
     res.redirect('/');
+}
+
+exports.getPlaylistsDynamic = async (req,res) => {
+    const playshot = await playlists.where('name', '==', req.params.username).get();
+    var title = "title";
+    var desc= "desc";
+    var samples = [];
+
+    if(!playshot.empty){
+        playshot.forEach(doc => {
+            title = doc.data().title;
+            desc= doc.data().description;
+            samples = doc.data().samples;
+        });
+    
+        res.render('dynamic-list',{'samples': samples, 'username':req.params.username,'title':title, 'description':desc});
+    }
+    else{
+        res.redirect('/search');
+    }
+
+    
 }

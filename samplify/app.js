@@ -19,9 +19,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json())
 app.use(flash());
 app.use(session({
+  name: "sid",
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  rolling: true,
+  cookie: {
+    path: '/',
+    secure: false,
+    maxAge: 1*60*1000,
+    signed: false
+  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
