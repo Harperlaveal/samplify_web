@@ -12,8 +12,40 @@ exports.getSearch = (req,res) =>{
     res.render('search',{'pageTitle':'Search'});
 }
 
-exports.getPlaylists = (req,res) => {
-    res.render('playlists',{'pageTitle':'Playlists'});
+exports.getPlaylists = async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.cookies.uid).get();
+        const plid = userdoc.data().plid;
+        const playdoc = await playlists.doc(plid).get();
+        var samples = playdoc.data().samples;
+        var title = playdoc.data().title;
+        var desc = playdoc.data().description;
+
+        res.render('playlists',{'samples':samples, 'title':title, 'desc': desc});
+    }
+    catch{
+        res.redirect('/');
+    }
+}
+
+exports.getPlaylistsDynamic = async (req,res) => {
+    const playshot = await playlists.where('name', '==', req.params.username).get();
+    var title = "title";
+    var desc= "desc";
+    var samples = [];
+
+    if(!playshot.empty){
+        playshot.forEach(doc => {
+            title = doc.data().title;
+            desc= doc.data().description;
+            samples = doc.data().samples;
+        });
+    
+        res.render('dynamic-list',{'samples': samples, 'username':req.params.username,'title':title, 'description':desc});
+    }
+    else{
+        res.redirect('/search');
+    }
 }
 
 exports.getProfile = (req,res) => {
@@ -71,26 +103,4 @@ exports.postRegister = async (req,res) => {
     } catch {
         return res.redirect('/register');
     }
-}
-
-exports.getPlaylistsDynamic = async (req,res) => {
-    const playshot = await playlists.where('name', '==', req.params.username).get();
-    var title = "title";
-    var desc= "desc";
-    var samples = [];
-
-    if(!playshot.empty){
-        playshot.forEach(doc => {
-            title = doc.data().title;
-            desc= doc.data().description;
-            samples = doc.data().samples;
-        });
-    
-        res.render('dynamic-list',{'samples': samples, 'username':req.params.username,'title':title, 'description':desc});
-    }
-    else{
-        res.redirect('/search');
-    }
-
-    
 }
