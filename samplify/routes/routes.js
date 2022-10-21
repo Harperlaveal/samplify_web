@@ -21,7 +21,9 @@ router.get('/register', checkNotAuthenticated, controller.getSignin);
 
 router.get('/', checkAuthenticated, controller.getIndex);
 
-router.get('/playlists/:username', controller.getPlaylistsDynamic)
+router.get('/playlists/:username', controller.getPlaylistsDynamic);
+
+router.get('/json/:username', controller.getJson);
 
 router.post('/login', controller.postLogin);
 
@@ -52,6 +54,20 @@ router.post('/search', async (req,res) => {
         res.redirect('/login');
     }
 })
+
+router.post('/json/:username', async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.body.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
+            title: req.body.title,
+            description: req.body.desc
+        });
+        res.status(201).json({ status: 'updating', message: 'tried to update data' });
+    } catch {
+        res.status(401).json({ status: 'failure', message: 'Data Not Added.' });
+    }
+});
 
 router.post('/playlists/edit', async (req,res) => {
     try{
