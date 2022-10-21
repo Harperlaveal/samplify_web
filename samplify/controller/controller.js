@@ -12,6 +12,11 @@ exports.getSearch = (req,res) =>{
     res.render('search',{'pageTitle':'Search'});
 }
 
+exports.unauthSearch = (req,res) =>{
+    res.render('not-search',{'pageTitle':'Search'});
+}
+
+
 exports.getPlaylists = async (req,res) => {
     try{
         const userdoc = await users.doc(req.cookies.uid).get();
@@ -67,6 +72,8 @@ exports.getLogin = (req,res) => {
 exports.getSignin = (req,res) => {
     res.render('register',{'pageTitle':'Signin'});
 }
+
+
 
 exports.postLogin = async (req,res) => {
     const email = req.body.email;
