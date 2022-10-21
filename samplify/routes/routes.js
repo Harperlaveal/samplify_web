@@ -51,7 +51,7 @@ router.post('/search', async (req,res) => {
     }
 })
 
-router.post('/playlists', async (req,res) => {
+router.post('/playlists/edit', async (req,res) => {
     try{
         const userdoc = await users.doc(req.cookies.uid).get();
         const plid = userdoc.data().plid;
@@ -63,7 +63,22 @@ router.post('/playlists', async (req,res) => {
         res.redirect('/playlists');
     }
     catch{
-        res.redirect('/login');
+        res.redirect('/profile');
+    }
+})
+
+router.post('/playlists/clear', async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.cookies.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
+            samples: []
+        });
+        
+        res.redirect('/playlists');
+    }
+    catch{
+        res.redirect('/profile');
     }
 })
 
