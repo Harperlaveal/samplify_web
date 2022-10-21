@@ -25,7 +25,6 @@ router.post('/login', controller.postLogin);
 
 const db=require('../firebase');
 const users=db.collection('users');
-
 const initializePassport = require('./passport-config');
 initializePassport(
   passport,
@@ -46,6 +45,22 @@ router.post('/search', async (req,res) => {
         });
 
         res.redirect('/search');
+    }
+    catch{
+        res.redirect('/login');
+    }
+})
+
+router.post('/playlists', async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.cookies.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
+            title: req.body.title,
+            description: req.body.desc
+        });
+        
+        res.redirect('/playlists');
     }
     catch{
         res.redirect('/login');
