@@ -1,7 +1,8 @@
-const { doc, getDoc, FieldValue } = require('firebase-admin/firestore');
 const db=require('../firebase');
 const users=db.collection('users');
 const playlists=db.collection('playlists');
+const bcrypt = require('bcrypt');
+const { v4: uuidv4 } = require('uuid');
 
 exports.getIndex = (req,res)=>{
     res.render('index',{'pageTitle':'Samplify'});
@@ -27,8 +28,53 @@ exports.getSignin = (req,res) => {
     res.render('register',{'pageTitle':'Signin'});
 }
 
+exports.postLogin = async (req,res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    await users.get().then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+            console.log(doc.id, " => ", doc.data().email);
+            const result = bcrypt.compareSync(password, doc.data().password);
+            if(doc.data().email === email && result) {
+                res.cookie("uid", doc.id);
+                console.log("cookie set");
+                res.redirect('/');
+                res.send();
+                return;
+            }
+        })
+    })
+}
+
+exports.postRegister = async (req,res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const userid = uuidv4().replace(/-/g, "");
+        const plid = uuidv4().replace(/-/g, "");
+
+        await users.doc(userid).set({
+            name: req.body.username,
+            email: req.body.email,
+            password: hashedPassword,
+            plid: plid,
+        });
+        const  userdoc = await users.doc(userid).get();
+
+        await playlists.doc(plid).set({
+            title: '',
+            description: '',
+            name: userdoc.data().name,
+            userid: userid,
+            samples: [],
+        });
+        return res.redirect('/login');
+    } catch {
+        return res.redirect('/register');
+    }
+}
+
 exports.getPlaylistsDynamic = async (req,res) => {
-    const playshot = await playlists.where('user', '==', req.params.username).get();
+    const playshot = await playlists.where('name', '==', req.params.username).get();
     var title = "title";
     var desc= "desc";
     var samples = [];
