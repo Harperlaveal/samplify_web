@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json())
 app.use(flash());
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: 'secret',
   resave: false,
   saveUninitialized: false
 }));
@@ -33,5 +33,7 @@ app.use('/playlists/', express.static('public'));
 app.use('/',routes);
 
 app.use((req,res)=>{res.send("cannot find page")});
-server = http.createServer(app);
-server.listen(3000, 'localhost');
+
+app.listen(process.env.PORT || 3002, () => {
+  console.log(`Server listening`);
+});
