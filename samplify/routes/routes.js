@@ -9,6 +9,8 @@ router.use(express.static(path.join(__dirname,'public')));
 
 router.get('/search', checkAuthenticated, controller.getSearch);
 
+router.get('/not-search', checkNotAuthenticated, controller.unauthSearch);
+
 router.get('/playlists', checkAuthenticated, controller.getPlaylists);
 
 router.get('/profile', checkAuthenticated, controller.getProfile);
