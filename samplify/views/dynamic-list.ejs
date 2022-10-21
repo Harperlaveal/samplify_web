@@ -30,8 +30,16 @@
           <div class='play-container'>
             <div class="pl-content">
                 <div id="Content" class="pl-text"> 
+                  <% if(title=="") { %>
+                    <div class="pl-name" id="pl-name">Untitled</div>
+                  <% } else { %>
                     <div class="pl-name" id="pl-name"><%= title %></div>
+                  <% } %>
+                  <% if(description=="") { %>
+                    <p class="pl-desc" id="pl-desc">Undescribed</p>
+                  <% } else { %>
                     <p class="pl-desc" id="pl-desc"><%= description %></p>
+                  <% } %>
                 </div>
                 <div class='pl-samples'>
                   <table class='table table-bordered'>

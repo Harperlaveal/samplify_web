@@ -52,6 +52,22 @@ router.post('/search', async (req,res) => {
     }
 })
 
+router.post('/playlists', async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.cookies.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
+            title: req.body.title,
+            description: req.body.desc
+        });
+        
+        res.redirect('/playlists');
+    }
+    catch{
+        res.redirect('/login');
+    }
+})
+
 router.delete('/logout', (req, res) => {
     req.logout(function(err) {
         if (err) { return next(err); }

@@ -44,33 +44,41 @@
     
         <div id="Playlists" class="page">
           <div class='play-container'>
-            <div class='list-view'>
-                <div class='playlists'>
-                  <div id='pl-items'>
-                    
+            <div class="pl-content">
+              <form action='/playlists' method="POST" id="playlist-form">
+                <div class="pl-content">
+                  <div id="Content" class="pl-text"> 
+                      <% if(title=="") { %>
+                        <input type="text" contentEditable="true" name="title" class="pl-name" id="pl-name" placeholder="...Enter Playlist Name">
+                      <% } else { %>
+                        <input type="text" contentEditable="true" name="title" class="pl-name" id="pl-name" value="<%= title %>">
+                      <% } %>
+                      <% if(desc=="") { %>
+                        <p>
+                          <input type="text" contentEditable="true" name="desc" class="pl-desc" id="pl-desc" placeholder="...Enter Playlist description">
+                        </p>
+                      <% } else { %>
+                        <p>
+                          <input type="text" contentEditable="true" name="desc" class="pl-desc" id="pl-desc" value="<%= desc %>">
+                        </p>
+                      <% } %>
+                      <button type="submit" id='edit' class="btn btn-outline-primary">Save</button>
+                  </div>
+                  <div class='pl-samples'>
+                    <table class='table table-bordered'>
+                      <tbody id='pl-sample-table'>
+                        <% for (var i = 0; i < samples.length; i++) { %>
+                          <tr>
+                            <td><%= samples[i].title %></td>
+                            <td><%= samples[i].artist %></td>
+                            <td><img src="<%= samples[i].img %>" width="75" height="75" alt=""></td>
+                          </tr>
+                          <% } %>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-                <div class='form-group'>
-                    <div class='pl-in-row'>
-                        <input id='pl-in-txt'  class='pl-input' placeholder='Playlist name' type="text">
-                        <button id='create' class="btn btn-outline-primary">Create</button>
-                    </div>
-                </div>
-            </div>
-            <div class="pl-content">
-                <div id="Content" class="pl-text"> 
-                    <div contentEditable="true" class="pl-name" id="pl-name"></div>
-                    <p contentEditable="true" class="pl-desc" id="pl-desc"></p>
-                    <button id='edit' class="btn btn-outline-primary">Save</button>
-                    <button id='delete' class="btn btn-outline-secondary"><i class="fa fa-trash-alt"></i></button>
-                </div>
-                <div class='pl-samples'>
-                  <table class='table table-bordered'>
-                    <tbody id='pl-sample-table'>
-        
-                    </tbody>
-                  </table>
-                </div>
+              </form>
             </div>
           </div>
         </div>
