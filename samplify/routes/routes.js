@@ -59,10 +59,8 @@ router.delete('/logout', (req, res) => {
 
 async function checkAuthenticated(req, res, next) {
     if (await checkCookie(req) ) {
-        console.log("authenticated");
         return next();
     }
-    console.log("not authenticated");
     res.redirect('/login');
 }
 
@@ -84,13 +82,9 @@ async function checkCookie(req) {
 
     querySnapshot.forEach((doc) => {
         if(doc.id == req.cookies.uid) {
-            console.log("cookie found")
             check = true;
             }
         })
     })
-    if(check === false) {
-        console.log("cookie not found");
-    }
     return check;
 }
