@@ -15,6 +15,12 @@ function bindEvents(){
         }
     });
     document.querySelector('#search').addEventListener('click', getSamplesFromSong);
+    document.querySelector('#search-playlist').addEventListener('click', getPlaylistPage);
+}
+
+async function getPlaylistPage(){
+    let search = document.getElementById("search-user-i").value;
+    window.location.replace('http://localhost:3000/playlists/' + search);
 }
 
 async function getSamplesFromSong(){
