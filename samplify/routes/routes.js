@@ -4,6 +4,7 @@ const router = express.Router();
 const controller = require('../controller/controller');
 
 const {OAuth2Client} = require('google-auth-library');
+const { UserMetadata } = require('firebase-admin/lib/auth/user-record');
 const CLIENT_ID = "611779178684-6k43d22p5teipami42c6m65297tbjmca.apps.googleusercontent.com";
 const client = new OAuth2Client(CLIENT_ID);
 
@@ -33,7 +34,7 @@ router.post('/login/normal', controller.postLogin);
 
 router.post('/login', async (req, res)=>{
     let token = req.body.token;
-
+let user = {};
     console.log(token);
     async function verify() {
         const ticket = await client.verifyIdToken({
