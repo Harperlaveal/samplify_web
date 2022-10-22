@@ -93,6 +93,10 @@ exports.getSignin = (req,res) => {
     res.render('register',{'pageTitle':'Signin'});
 }
 
+exports.getSignedOut = (req, res) => {
+    res.render('signedOut',{'pageTitle':'SignedOut'});
+}
+
 exports.postLogin = async (req,res) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -236,6 +240,23 @@ exports.checkNotAuthenticated = async (req, res, next) => {
         return res.redirect('/');
     }
     next();
+}
+
+/**
+ * Method to check if session id exists
+ */
+ exports.checkSessionID = async(req, res, next) => {
+    let check = false;
+    if(req.cookies.sid) {
+        check = true;
+    }
+    if(check) {
+        next();
+
+    } else {
+        res.clearCookie("uid");
+        return res.redirect('/signedOut');
+    }
 }
 
 /**
