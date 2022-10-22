@@ -3,6 +3,10 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controller/controller');
 
+const {OAuth2Client} = require('google-auth-library');
+const CLIENT_ID = "611779178684-6k43d22p5teipami42c6m65297tbjmca.apps.googleusercontent.com";
+const client = new OAuth2Client(CLIENT_ID);
+
 router.use(express.static(path.join(__dirname,'public')));
 
 router.get('/search', controller.checkSessionID, controller.checkAuthenticated, controller.getSearch);
@@ -25,7 +29,29 @@ router.get('/json/:username', controller.getJson);
 
 router.get('/signedOut', controller.getSignedOut);
 
-router.post('/login', controller.postLogin);
+router.post('/login/normal', controller.postLogin);
+
+router.post('/login', async (req, res)=>{
+    let token = req.body.token;
+
+    console.log(token);
+    async function verify() {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
+        const userid = payload['sub'];
+      }
+      verify()
+      .then(() => {
+          res.cookie('session-token', token);
+          res.send('success');
+      }).
+      catch();
+}
+)
+
 
 router.post('/register', controller.checkNotAuthenticated, controller.postRegister);
 
