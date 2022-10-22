@@ -1,5 +1,3 @@
-// template functions
-
 window.addEventListener("load",init);
 
 function init(){
