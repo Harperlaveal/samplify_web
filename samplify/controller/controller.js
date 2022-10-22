@@ -105,10 +105,10 @@ exports.postLogin = async (req,res) => {
             const result = bcrypt.compareSync(password, doc.data().password);
             if(doc.data().email === email && result) {
                 res.cookie("uid", doc.id, {expires: new Date(Date.now() + 172800000)}); // cookie will expire after 2 days
-                res.redirect('/');
-                res.send();
-                return;
             }
+            res.redirect('/'); // will redirect to login if login fails 
+            res.send();
+            return;
         })
     })
 }
