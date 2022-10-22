@@ -20,7 +20,7 @@ function bindEvents(){
 
 async function getPlaylistPage(){
     let search = document.getElementById("search-user-i").value;
-    window.location.replace('https://i-samplify.herokuapp.com/playlists/' + search);
+    window.location.replace('http:localhost/3002/playlists/' + search);
 }
 
 async function getSamplesFromSong(){
