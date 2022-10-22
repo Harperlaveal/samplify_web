@@ -47,13 +47,13 @@
                       <% } else { %>
                         <input type="text" contentEditable="true" name="title" class="pl-name" id="pl-name" value="<%= title %>">
                       <% } %>
-                      <% if(desc=="") { %>
+                      <% if(desc.trim().length == 0) { %>
                         <div>
-                          <input type="text" contentEditable="true" name="desc" class="pl-desc" id="pl-desc" placeholder="...Enter Playlist description">
+                          <textarea  style="resize: none;" type="text" contentEditable="true" name="desc" class="pl-desc" id="pl-desc" placeholder="...Enter description"></textarea></textarea>
                         </div>
                       <% } else { %>
                         <div>
-                          <input type="text" contentEditable="true" name="desc" class="pl-desc" id="pl-desc" value="<%= desc %>">
+                          <textarea  style="resize: none;" type="text" contentEditable="true" name="desc" class="pl-desc" id="pl-desc"><%= desc %></textarea>
                         </div>
                       <% } %>
                       <button id='edit' class="btn btn-outline-primary" formaction="/playlists/edit">Save</button>

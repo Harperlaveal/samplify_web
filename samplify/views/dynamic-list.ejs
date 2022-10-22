@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script type="module" src="src/PlaylistController.js"></script>
-  <script type="module" src="src/LoginController.js"></script>
   <script src="src/SearchController.js"></script>
   <script src="src/PlaylistSearchController.js"></script>
   <script src="src/PlaylistObject.js"></script>
@@ -47,7 +46,7 @@
                   <% } else { %>
                     <div class="pl-name" id="pl-name"><%= title %></div>
                   <% } %>
-                  <% if(description=="") { %>
+                  <% if(description.trim().length == 0) { %>
                     <p class="pl-desc" id="pl-desc">Undescribed</p>
                   <% } else { %>
                     <p class="pl-desc" id="pl-desc"><%= description %></p>
