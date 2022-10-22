@@ -15,6 +15,11 @@ function bindEvents(){
         }
     });
     document.querySelector('#search').addEventListener('click', getSamplesFromSong);
+    document.querySelector('##search-playlist').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            getPlaylistPage();
+        }
+    });
     document.querySelector('#search-playlist').addEventListener('click', getPlaylistPage);
 }
 
