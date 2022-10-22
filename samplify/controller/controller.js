@@ -178,11 +178,17 @@ exports.postSearch = async (req,res) => {
     try{
         const userdoc = await users.doc(req.cookies.uid).get();
         const plid = userdoc.data().plid;
-        await db.collection('playlists').doc(plid).update({
-            samples: FieldValue.arrayUnion(req.body),
-        });
 
-        res.redirect('/search');
+        let sampleJSON = req.body.samples;
+
+        let selected = JSON.parse(sampleJSON);
+
+        selected.map(async (sample)=>{
+            await db.collection('playlists').doc(plid).update({
+                samples: FieldValue.arrayUnion(sample),
+           });
+        })
+        res.redirect('/playlists');
     }
     catch{
         res.redirect('/');

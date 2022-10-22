@@ -40,10 +40,15 @@ const resultOperations = {
         for(i = 0; i<this.results.length; i++){
             re = this.results[i];
             if(re.id == id){
-                re.isSelected = !re.isSelected;
-            }
-            else{
-                re.isSelected = false;
+                re.toggleSelected();
+                if(re.isSelected==true){
+                    this.selected.push(re);
+                }
+                else{
+                    let index = this.selected.indexOf(re);
+                    this.selected.splice(index, 1);
+                }
+                break;
             }
         }
     }

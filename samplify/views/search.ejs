@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="module" src="src/PlaylistController.js"></script>
-    <script type="module" src="src/LoginController.js"></script>
     <script src="src/SearchController.js"></script>
     <script src="src/PlaylistObject.js"></script>
     <script src="src/PlaylistOperations.js"></script>
@@ -72,10 +71,7 @@
                 
                 <div id="loader" class="searching"><div class="loading-row">Finding samples <div class="loading-circle"></div></div></div>
 
-                <input readonly type="hidden" id="form-title" name="title" placeholder="Title" required>
-                <input readonly type="hidden" id="form-artist" name="artist" placeholder="Artist" required>
-                <input readonly type="hidden" id="form-img" name="img" placeholder="Img" required>
-
+                <input readonly type="hidden" id="selected-samples" name="samples" placeholder="Samples" required>
 
                 <button disabled id='add' type="submit" class="btn btn-outline-primary">Add to playlist</button>
             </form>
