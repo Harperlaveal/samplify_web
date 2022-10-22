@@ -120,25 +120,25 @@ exports.postRegister = async (req,res) => {
         const userid = uuidv4().replace(/-/g, "");
         const plid = uuidv4().replace(/-/g, "");
 
-        await users.doc(userid).set({
-            name: req.body.username,
-            email: req.body.email,
-            password: hashedPassword,
-            plid: plid,
-        });
-        const  userdoc = await users.doc(userid).get();
-
-        await playlists.doc(plid).set({
-            title: '',
-            description: '',
-            name: userdoc.data().name,
-            userid: userid,
-            samples: [],
-        });
         if (req.body.password.length < 8) {
             return res.render('register',{'bad':true});
         }
         else {
+            await users.doc(userid).set({
+                name: req.body.username,
+                email: req.body.email,
+                password: hashedPassword,
+                plid: plid,
+            });
+            const  userdoc = await users.doc(userid).get();
+    
+            await playlists.doc(plid).set({
+                title: '',
+                description: '',
+                name: userdoc.data().name,
+                userid: userid,
+                samples: [],
+            });
             return res.redirect('/login');
         }
         
