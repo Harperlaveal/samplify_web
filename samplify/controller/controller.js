@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 const { FieldValue } = require('firebase-admin/firestore');
 const {OAuth2Client} = require('google-auth-library');
-const { UserMetadata } = require('firebase-admin/lib/auth/user-record');
 const CLIENT_ID = "611779178684-6k43d22p5teipami42c6m65297tbjmca.apps.googleusercontent.com";
 const client = new OAuth2Client(CLIENT_ID);
 
