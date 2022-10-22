@@ -3,11 +3,6 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controller/controller');
 
-const {OAuth2Client} = require('google-auth-library');
-const { UserMetadata } = require('firebase-admin/lib/auth/user-record');
-const CLIENT_ID = "611779178684-6k43d22p5teipami42c6m65297tbjmca.apps.googleusercontent.com";
-const client = new OAuth2Client(CLIENT_ID);
-
 router.use(express.static(path.join(__dirname,'public')));
 
 router.get('/search', controller.checkSessionID, controller.checkAuthenticated, controller.getSearch);
