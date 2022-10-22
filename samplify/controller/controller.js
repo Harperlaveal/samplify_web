@@ -4,6 +4,7 @@ const playlists=db.collection('playlists');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 const { FieldValue } = require('firebase-admin/firestore');
+const { json } = require('express');
 
 exports.getIndex = (req,res)=>{
     res.render('index');
@@ -229,14 +230,29 @@ exports.postClearPlaylist = async (req,res) => {
     try{
         const userdoc = await users.doc(req.cookies.uid).get();
         const plid = userdoc.data().plid;
+
+        let idJSON = req.body.remove;
+
+        let selected = JSON.parse(idJSON);
+
+        let samples = (await db.collection('playlists').doc(plid).get()).data().samples;
+
+        for (let i = selected.length - 1; i >= 0; i--) {
+            for (let j = samples.length - 1; j >= 0; j--) {
+                if (selected[i] == samples[j].id) { 
+                    samples.splice(j,1);
+                 }
+            }
+        }
+
         await db.collection('playlists').doc(plid).update({
-            samples: []
+            samples: samples
         });
-        
+
         res.redirect('/playlists');
     }
     catch{
-        res.redirect('/profile');
+        res.redirect('/');
     }
 }
 

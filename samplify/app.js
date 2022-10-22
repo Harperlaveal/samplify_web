@@ -27,7 +27,7 @@ app.use(session({
   cookie: {
     path: '/',
     secure: false,
-    maxAge: 1*120*1000,
+    maxAge: 1*240*1000,
     signed: false
   }
 }));
