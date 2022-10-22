@@ -12,6 +12,11 @@ exports.getSearch = (req,res) =>{
     res.render('search',{'pageTitle':'Search'});
 }
 
+exports.unauthSearch = (req,res) =>{
+    res.render('not-search',{'pageTitle':'Search'});
+}
+
+
 exports.getPlaylists = async (req,res) => {
     try{
         const userdoc = await users.doc(req.cookies.uid).get();
@@ -25,6 +30,45 @@ exports.getPlaylists = async (req,res) => {
     }
     catch{
         res.redirect('/');
+    }
+}
+
+exports.getPlaylistsDynamic = async (req,res) => {
+    const playshot = await playlists.where('name', '==', req.params.username).get();
+    var title = "title";
+    var desc= "desc";
+    var samples = [];
+
+    if(!playshot.empty){
+        playshot.forEach(doc => {
+            title = doc.data().title;
+            desc= doc.data().description;
+            samples = doc.data().samples;
+        });
+        res.render('dynamic-list',{'samples': samples, 'username':req.params.username,'title':title, 'description':desc});
+    }
+    else{
+        res.redirect('/search');
+    }
+}
+
+exports.getJson = async (req,res) => {
+    const playshot = await playlists.where('name', '==', req.params.username).get();
+    var title = "title";
+    var desc= "desc";
+    var samples = [];
+    if(!playshot.empty){
+        playshot.forEach(doc => {
+            title = doc.data().title;
+            desc= doc.data().description;
+            samples = doc.data().samples;
+        });
+        let playlist = {
+            title: title,
+            desc: desc,
+            samples: samples
+        }
+        res.status(200).json(playlist);
     }
 }
 
@@ -121,4 +165,111 @@ exports.getPlaylistsDynamic = async (req,res) => {
     }
 
     
+}
+
+exports.postSearch = async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.cookies.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
+            samples:FieldValue.arrayUnion(req.body),
+        });
+
+        res.redirect('/search');
+    }
+    catch{
+        res.redirect('/login');
+    }
+}
+
+exports.postJson = async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.body.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
+            title: req.body.title,
+            description: req.body.desc
+        });
+        res.status(201).json({ status: 'updating', message: 'tried to update data' });
+    } catch {
+        res.status(401).json({ status: 'failure', message: 'Data Not Added.' });
+    }
+}
+
+exports.postEditPlaylist = async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.cookies.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
+            title: req.body.title,
+            description: req.body.desc
+        });
+        
+        res.redirect('/playlists');
+    }
+    catch{
+        res.redirect('/profile');
+    }
+}
+
+exports.postClearPlaylist = async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.cookies.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
+            samples: []
+        });
+        
+        res.redirect('/playlists');
+    }
+    catch{
+        res.redirect('/profile');
+    }
+}
+
+exports.checkAuthenticated = async (req, res, next) => {
+    if (await checkCookie(req) ) {
+        return next();
+    }
+    res.redirect('/login');
+}
+
+exports.checkNotAuthenticated = async (req, res, next) => {
+    if (await checkCookie(req)){
+        return res.redirect('/');
+    }
+    next();
+}
+
+/**
+ * Method to check if session id exists
+ */
+ exports.checkSessionID = async(req, res, next) => {
+    let check = false;
+    if(req.cookies.sid) {
+        check = true;
+    }
+    if(check) {
+        next();
+
+    } else {
+        res.clearCookie("uid");
+        return res.redirect('/signedOut');
+    }
+}
+
+/**
+ * Method to check if a response contains a valid cookie
+ */
+ async function checkCookie(req) {
+    let check = false;
+    await users.get().then(querySnapshot => {
+
+    querySnapshot.forEach((doc) => {
+        if(doc.id == req.cookies.uid) {
+            check = true;
+            }
+        })
+    })
+    return check;
 }

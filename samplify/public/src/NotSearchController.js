@@ -25,14 +25,13 @@ function bindEvents(){
 
 async function getPlaylistPage(){
     let search = document.getElementById("search-user-i").value;
-    window.location.replace('http:localhost/3002/playlists/' + search);
+    window.location.replace('http://localhost:3002/playlists/' + search);
 }
 
 async function getSamplesFromSong(){
     document.querySelector('#samples').innerHTML = null;
     document.querySelector('#showing-results').innerHTML = null;
     resultOperations.clearResults();
-    document.getElementById("add").disabled = true;
     let search = document.getElementById("song").value;
     if(search.trim().length != 0){
         console.log(search);
@@ -116,7 +115,6 @@ function displaySample(sample){
     tr.insertCell(0).innerText = sample['title'];
     tr.insertCell(1).innerText = sample['artist'];
     tr.insertCell(2).appendChild(createImage(sample['imgUrl']));
-    tr.insertCell(3).appendChild(createSelect(sample['id']));
 }
 
 function createImage(url){
@@ -129,35 +127,3 @@ function createImage(url){
        return imgTag;
 }
 
-function createSelect(id){
-       var iTag = document.createElement("i");
-       iTag.className = "fas fa-cart-plus";
-       iTag.addEventListener('click',toggle);
-       iTag.setAttribute("data-itemid", id) ;
-       iTag.setAttribute("style", "font-size:50px;") ;
-   
-       return iTag;
-}
-
-function toggle(){
-    let id = this.getAttribute('data-itemid');
-    let tr = this.parentNode.parentNode;
-    let selected = resultOperations.search(id);
-    if(!selected.isSelected){
-        var table = document.getElementById("search-table");
-        for (var i = 0, row; row = table.rows[i]; i++) {
-            row.setAttribute("class", "table-default");
-        }
-        tr.setAttribute("class", "table-primary");
-
-        document.getElementById('form-title').value = selected.title;
-        document.getElementById('form-artist').value = selected.artist;
-        document.getElementById('form-img').value = selected.imgUrl;
-        document.getElementById("add").disabled = false;
-    }
-    else{
-        tr.setAttribute("class", "table-default");
-        document.getElementById("add").disabled = true;
-    }
-    resultOperations.toggleResult(id);
-}

@@ -41,5 +41,7 @@ app.use('/playlists/', express.static('public'));
 app.use('/',routes);
 
 app.use((req,res)=>{res.send("cannot find page")});
-server = http.createServer(app);
-server.listen(3000, 'localhost');
+
+app.listen(process.env.PORT || 3002, () => {
+  console.log(`Server listening`);
+});
