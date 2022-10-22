@@ -3,17 +3,18 @@ const users=db.collection('users');
 const playlists=db.collection('playlists');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
+const { FieldValue } = require('firebase-admin/firestore');
 
 exports.getIndex = (req,res)=>{
-    res.render('index',{'pageTitle':'Samplify'});
+    res.render('index');
 }
 
 exports.getSearch = (req,res) =>{
-    res.render('search',{'pageTitle':'Search'});
+    res.render('search');
 }
 
 exports.unauthSearch = (req,res) =>{
-    res.render('not-search',{'pageTitle':'Search'});
+    res.render('not-search');
 }
 
 
@@ -172,13 +173,13 @@ exports.postSearch = async (req,res) => {
         const userdoc = await users.doc(req.cookies.uid).get();
         const plid = userdoc.data().plid;
         await db.collection('playlists').doc(plid).update({
-            samples:FieldValue.arrayUnion(req.body),
+            samples: FieldValue.arrayUnion(req.body),
         });
 
         res.redirect('/search');
     }
     catch{
-        res.redirect('/login');
+        res.redirect('/');
     }
 }
 
