@@ -11,13 +11,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script type="module" src="src/PlaylistController.js"></script>
-  <script type="module" src="src/LoginController.js"></script>
-  <script src="src/SearchController.js"></script>
-  <script src="src/PlaylistObject.js"></script>
-  <script src="src/PlaylistOperations.js"></script>
-  <script src="src/SampleObject.js"></script>
-  <script src="src/ResultOperations.js"></script>
+  <script src="src/PlaylistController.js"></script>
 </head>
 
 <body>
@@ -45,40 +39,47 @@
         <div id="Playlists" class="page">
           <div class='play-container'>
             <div class="pl-content">
-              <form action='/playlists' method="POST" id="playlist-form">
                 <div class="pl-content">
                   <div id="Content" class="pl-text"> 
+                    <form action='/playlists' method="POST" id="playlist-form">
                       <% if(title=="") { %>
                         <input type="text" contentEditable="true" name="title" class="pl-name" id="pl-name" placeholder="...Enter Playlist Name">
                       <% } else { %>
                         <input type="text" contentEditable="true" name="title" class="pl-name" id="pl-name" value="<%= title %>">
                       <% } %>
-                      <% if(desc=="") { %>
-                        <p>
-                          <input type="text" contentEditable="true" name="desc" class="pl-desc" id="pl-desc" placeholder="...Enter Playlist description">
-                        </p>
+                      <% if(desc.trim().length == 0) { %>
+                        <div>
+                          <textarea  style="resize: none;" type="text" contentEditable="true" name="desc" class="pl-desc" id="pl-desc" placeholder="...Enter description"></textarea></textarea>
+                        </div>
                       <% } else { %>
-                        <p>
-                          <input type="text" contentEditable="true" name="desc" class="pl-desc" id="pl-desc" value="<%= desc %>">
-                        </p>
+                        <div>
+                          <textarea  style="resize: none;" type="text" contentEditable="true" name="desc" class="pl-desc" id="pl-desc"><%= desc %></textarea>
+                        </div>
                       <% } %>
-                      <button type="submit" id='edit' class="btn btn-outline-primary">Save</button>
+                      <button id='edit' class="btn btn-outline-primary" formaction="/playlists/edit">Save</button>
+                      <button disabled id="clear-samples" class="btn btn-outline-secondary" formaction="/playlists/clear">Remove selected</button>
+                      <input readonly type="hidden" id="selected-samples" name="remove" placeholder="Samples" required>
+                    </form>
                   </div>
                   <div class='pl-samples'>
                     <table class='table table-bordered'>
                       <tbody id='pl-sample-table'>
+                        <% if(samples.length==0) { %>
+                          <div>Search some samples!</div>
+                        <% } %>
                         <% for (var i = 0; i < samples.length; i++) { %>
                           <tr>
                             <td><%= samples[i].title %></td>
                             <td><%= samples[i].artist %></td>
                             <td><img src="<%= samples[i].img %>" width="75" height="75" alt=""></td>
+                            <td class="minus-click"><i id="minus" data-itemid="<%= samples[i].id %>" class="fa fa-minus"></i></td>
                           </tr>
                           <% } %>
                       </tbody>
                     </table>
                   </div>
                 </div>
-              </form>
+              
             </div>
           </div>
         </div>

@@ -19,9 +19,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json())
 app.use(flash());
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  name: "sid",
+  secret: "secret",
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  rolling: true,
+  cookie: {
+    path: '/',
+    secure: false,
+    maxAge: 1*240*1000,
+    signed: false
+  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -32,6 +40,8 @@ app.use('/playlists/', express.static('public'));
 
 app.use('/',routes);
 
-app.use((req,res)=>{res.send("cannot find page")});
-server = http.createServer(app);
-server.listen(3000, 'localhost');
+app.use((req,res)=>{res.render("oops")});
+
+app.listen(process.env.PORT || 3002, () => {
+  console.log(`Server listening`);
+});

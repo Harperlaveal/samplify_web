@@ -2,91 +2,44 @@ const path=require('path')
 const express = require('express');
 const router = express.Router();
 const controller = require('../controller/controller');
-const passport = require('passport');
-const { FieldValue } = require('firebase-admin/firestore');
 
 router.use(express.static(path.join(__dirname,'public')));
 
-router.get('/search', checkAuthenticated, controller.getSearch);
+router.get('/search', controller.checkSessionID, controller.checkAuthenticated, controller.getSearch);
 
-router.get('/playlists', checkAuthenticated, controller.getPlaylists);
+router.get('/not-search', controller.checkSessionID, controller.checkNotAuthenticated, controller.unauthSearch);
 
-router.get('/profile', checkAuthenticated, controller.getProfile);
+router.get('/playlists', controller.checkSessionID, controller.checkAuthenticated, controller.getPlaylists);
 
-router.get('/login', checkNotAuthenticated, controller.getLogin);
+router.get('/profile', controller.checkSessionID, controller.checkAuthenticated, controller.getProfile);
 
-router.get('/register', checkNotAuthenticated, controller.getSignin);
+router.get('/login', controller.checkNotAuthenticated, controller.getLogin);
 
-router.get('/', checkAuthenticated, controller.getIndex);
+router.get('/register', controller.checkNotAuthenticated, controller.getSignin);
 
-router.get('/playlists/:username', controller.getPlaylistsDynamic)
+router.get('/', controller.checkSessionID, controller.checkAuthenticated, controller.getSearch);
 
-router.post('/login', controller.postLogin);
+router.get('/playlists/:username', controller.getPlaylistsDynamic);
 
-const db=require('../firebase');
-const users=db.collection('users');
-const initializePassport = require('./passport-config');
-initializePassport(
-  passport,
-  email => users.find(user => user.email === email),
-  id => users.find(user => user.id === id)
-)
+router.get('/json/:username', controller.getJson);
 
-router.post('/register', checkNotAuthenticated, controller.postRegister);
+router.get('/signedOut', controller.getSignedOut);
+
+router.post('/login/normal', controller.postLogin);
+
+router.post('/login', controller.postGoogle);
+
+router.post('/register', controller.checkNotAuthenticated, controller.postRegister);
 
 router.post('/profile', controller.postSignout);
 
-router.post('/search', async (req,res) => {
-    try{
-        const userdoc = await users.doc(req.cookies.uid).get();
-        const plid = userdoc.data().plid;
-        await db.collection('playlists').doc(plid).update({
-            samples:FieldValue.arrayUnion(req.body),
-        });
+router.post('/search', controller.postSearch);
 
-        res.redirect('/search');
-    }
-    catch{
-        res.redirect('/login');
-    }
-})
+router.post('/json/:username', controller.postJson);
 
-router.post('/playlists', async (req,res) => {
-    try{
-        const userdoc = await users.doc(req.cookies.uid).get();
-        const plid = userdoc.data().plid;
-        await db.collection('playlists').doc(plid).update({
-            title: req.body.title,
-            description: req.body.desc
-        });
-        
-        res.redirect('/playlists');
-    }
-    catch{
-        res.redirect('/login');
-    }
-})
+router.post('/playlists/edit', controller.postEditPlaylist);
 
-router.delete('/logout', (req, res) => {
-    req.logout(function(err) {
-        if (err) { return next(err); }
-        res.redirect('/');
-      });
-})
-
-async function checkAuthenticated(req, res, next) {
-    if (await checkCookie(req) ) {
-        return next();
-    }
-    res.redirect('/login');
-}
-
-async function checkNotAuthenticated(req, res, next) {
-    if (await checkCookie(req)){
-        return res.redirect('/');
-    }
-    next();
-}
+router.post('/playlists/clear', controller.postClearPlaylist);
 
 module.exports=router;
 

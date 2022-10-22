@@ -21,7 +21,6 @@ async function getSamplesFromSong(){
     document.querySelector('#samples').innerHTML = null;
     document.querySelector('#showing-results').innerHTML = null;
     resultOperations.clearResults();
-    document.getElementById("add").disabled = true;
     let search = document.getElementById("song").value;
     if(search.trim().length != 0){
         console.log(search);
@@ -65,7 +64,7 @@ function readSamples(data){
             let samp = new Sample();
             samp['title'] = sample['title'];
             samp['artist'] = sample['artist_names'];
-            samp['img'] = sample['header_image_thumbnail_url'];
+            samp['imgUrl'] = sample['header_image_thumbnail_url'];
             samp['id'] = sample['id'];
 
             resultOperations.addResult(samp);
@@ -104,8 +103,7 @@ function displaySample(sample){
     var tr = tbody.insertRow();
     tr.insertCell(0).innerText = sample['title'];
     tr.insertCell(1).innerText = sample['artist'];
-    tr.insertCell(2).appendChild(createImage(sample['img']));
-    tr.insertCell(3).appendChild(createSelect(sample['id']));
+    tr.insertCell(2).appendChild(createImage(sample['imgUrl']));
 }
 
 function createImage(url){
@@ -118,32 +116,3 @@ function createImage(url){
        return imgTag;
 }
 
-function createSelect(id){
-       var iTag = document.createElement("i");
-       iTag.className = "fas fa-cart-plus";
-       iTag.addEventListener('click',toggle);
-       iTag.setAttribute("data-itemid", id) ;
-       iTag.setAttribute("style", "font-size:50px;") ;
-   
-       return iTag;
-}
-
-function toggle(){
-    let id = this.getAttribute('data-itemid');
-    resultOperations.toggleResult(id);
-    let tr = this.parentNode.parentNode;
-    tr.classList.toggle('alert-primary');
-
-    if(resultOperations.getSelected().length == 0){
-        document.getElementById("add").disabled = true;
-    }
-    else{
-        document.getElementById("add").disabled = false;
-    }
-
-    let samples = JSON.stringify(resultOperations.getSelected());
-
-    document.getElementById('selected-samples').value = samples;
-
-    console.log(samples);
-}
