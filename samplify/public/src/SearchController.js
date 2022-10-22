@@ -15,12 +15,6 @@ function bindEvents(){
         }
     });
     document.querySelector('#search').addEventListener('click', getSamplesFromSong);
-    document.querySelector('#search-playlist').addEventListener('click', getPlaylistPage);
-}
-
-async function getPlaylistPage(){
-    let search = document.getElementById("search-user-i").value;
-    window.location.replace('https://i-samplify.herokuapp.com/playlists/' + search);
 }
 
 async function getSamplesFromSong(){
@@ -71,7 +65,7 @@ function readSamples(data){
             let samp = new Sample();
             samp['title'] = sample['title'];
             samp['artist'] = sample['artist_names'];
-            samp['imgUrl'] = sample['header_image_thumbnail_url'];
+            samp['img'] = sample['header_image_thumbnail_url'];
             samp['id'] = sample['id'];
 
             resultOperations.addResult(samp);
@@ -110,7 +104,7 @@ function displaySample(sample){
     var tr = tbody.insertRow();
     tr.insertCell(0).innerText = sample['title'];
     tr.insertCell(1).innerText = sample['artist'];
-    tr.insertCell(2).appendChild(createImage(sample['imgUrl']));
+    tr.insertCell(2).appendChild(createImage(sample['img']));
     tr.insertCell(3).appendChild(createSelect(sample['id']));
 }
 
@@ -136,23 +130,20 @@ function createSelect(id){
 
 function toggle(){
     let id = this.getAttribute('data-itemid');
+    resultOperations.toggleResult(id);
     let tr = this.parentNode.parentNode;
-    let selected = resultOperations.search(id);
-    if(!selected.isSelected){
-        var table = document.getElementById("search-table");
-        for (var i = 0, row; row = table.rows[i]; i++) {
-            row.setAttribute("class", "table-default");
-        }
-        tr.setAttribute("class", "table-primary");
+    tr.classList.toggle('alert-primary');
 
-        document.getElementById('form-title').value = selected.title;
-        document.getElementById('form-artist').value = selected.artist;
-        document.getElementById('form-img').value = selected.imgUrl;
-        document.getElementById("add").disabled = false;
-    }
-    else{
-        tr.setAttribute("class", "table-default");
+    if(resultOperations.getSelected().length == 0){
         document.getElementById("add").disabled = true;
     }
-    resultOperations.toggleResult(id);
+    else{
+        document.getElementById("add").disabled = false;
+    }
+
+    let samples = JSON.stringify(resultOperations.getSelected());
+
+    document.getElementById('selected-samples').value = samples;
+
+    console.log(samples);
 }

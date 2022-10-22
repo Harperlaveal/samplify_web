@@ -44,45 +44,45 @@
         <div id="Playlists" class="page">
           <div class='play-container'>
             <div class="pl-content">
-              <form action='/playlists' method="POST" id="playlist-form">
                 <div class="pl-content">
                   <div id="Content" class="pl-text"> 
+                    <form action='/playlists' method="POST" id="playlist-form">
                       <% if(title=="") { %>
                         <input type="text" contentEditable="true" name="title" class="pl-name" id="pl-name" placeholder="...Enter Playlist Name">
                       <% } else { %>
                         <input type="text" contentEditable="true" name="title" class="pl-name" id="pl-name" value="<%= title %>">
                       <% } %>
                       <% if(desc=="") { %>
-                        <p>
+                        <div>
                           <input type="text" contentEditable="true" name="desc" class="pl-desc" id="pl-desc" placeholder="...Enter Playlist description">
-                        </p>
+                        </div>
                       <% } else { %>
-                        <p>
+                        <div>
                           <input type="text" contentEditable="true" name="desc" class="pl-desc" id="pl-desc" value="<%= desc %>">
-                        </p>
+                        </div>
                       <% } %>
                       <button id='edit' class="btn btn-outline-primary" formaction="/playlists/edit">Save</button>
                       <button id="clear-all" class="btn btn-outline-danger" formaction="/playlists/clear">Clear Samples</button>
+                    </form>
                   </div>
                   <div class='pl-samples'>
                     <table class='table table-bordered'>
-                        <tbody id='pl-sample-table'>
-                          <% if(samples.length==0) { %>
-                            <div>Search some samples!</div>
+                      <tbody id='pl-sample-table'>
+                        <% if(samples.length==0) { %>
+                          <div>This user has no samples</div>
+                        <% } %>
+                        <% for (var i = 0; i < samples.length; i++) { %>
+                          <tr>
+                            <td><%= samples[i].title %></td>
+                            <td><%= samples[i].artist %></td>
+                            <td><img src="<%= samples[i].img %>" width="75" height="75" alt=""></td>
+                          </tr>
                           <% } %>
-                          <% for (var i = 0; i < samples.length; i++) { %>
-                            <tr>
-                              <td><%= samples[i].title %></td>
-                              <td><%= samples[i].artist %></td>
-                              <td><img src="<%= samples[i].img %>" width="75" height="75" alt=""></td>
-                              <!-- <td><i id="delete-sample" sampid="<%= i %>" class="fas fa-minus" style="font-size:25px;" ></i></td> -->
-                            </tr>
-                            <% } %>
-                        </tbody>
+                      </tbody>
                     </table>
                   </div>
                 </div>
-              </form>
+              
             </div>
           </div>
         </div>
