@@ -48,6 +48,10 @@ exports.getSignin = (req,res) => {
     res.render('register',{'pageTitle':'Signin'});
 }
 
+exports.getSignedOut = (req, res) => {
+    res.render('signedOut',{'pageTitle':'SignedOut'});
+}
+
 exports.postLogin = async (req,res) => {
     const email = req.body.email;
     const password = req.body.password;

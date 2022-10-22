@@ -19,6 +19,8 @@ router.get('/register', checkNotAuthenticated, controller.getSignin);
 
 router.get('/', checkSessionID, checkAuthenticated, controller.getIndex);
 
+router.get('/signedOut', controller.getSignedOut);
+
 router.get('/playlists/:username', controller.getPlaylistsDynamic)
 
 router.post('/login', controller.postLogin);
@@ -121,6 +123,6 @@ async function checkSessionID(req, res, next) {
     } else {
         console.log("no session ID found");
         res.clearCookie("uid");
-        return res.redirect('/');
+        return res.redirect('/signedOut');
     }
 }
