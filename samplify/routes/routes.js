@@ -32,27 +32,7 @@ router.get('/signedOut', controller.getSignedOut);
 
 router.post('/login/normal', controller.postLogin);
 
-router.post('/login', async (req, res)=>{
-    let token = req.body.token;
-let user = {};
-    console.log(token);
-    async function verify() {
-        const ticket = await client.verifyIdToken({
-            idToken: token,
-            audience: CLIENT_ID,
-        });
-        const payload = ticket.getPayload();
-        const userid = payload['sub'];
-      }
-      verify()
-      .then(() => {
-          res.cookie('session-token', token);
-          res.send('success');
-      }).
-      catch();
-}
-)
-
+router.post('/login', controller.postGoogle);
 
 router.post('/register', controller.checkNotAuthenticated, controller.postRegister);
 

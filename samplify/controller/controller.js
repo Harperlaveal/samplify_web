@@ -264,6 +264,26 @@ exports.checkNotAuthenticated = async (req, res, next) => {
     next();
 }
 
+exports.postGoogle = async (req, res)=>{
+    let token = req.body.token;
+let user = {};
+    console.log(token);
+    async function verify() {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
+        const userid = payload['sub'];
+      }
+      verify()
+      .then(() => {
+          res.cookie('session-token', token);
+          res.send('success');
+      }).
+      catch();
+}
+
 /**
  * Method to check if session id exists
  */
