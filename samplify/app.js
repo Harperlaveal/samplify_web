@@ -27,7 +27,7 @@ app.use(session({
   cookie: {
     path: '/',
     secure: false,
-    maxAge: 1*30*1000,
+    maxAge: 1*120*1000,
     signed: false
   }
 }));
@@ -40,7 +40,7 @@ app.use('/playlists/', express.static('public'));
 
 app.use('/',routes);
 
-app.use((req,res)=>{res.send("cannot find page")});
+app.use((req,res)=>{res.render("oops")});
 
 app.listen(process.env.PORT || 3002, () => {
   console.log(`Server listening`);

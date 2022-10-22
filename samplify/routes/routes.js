@@ -17,7 +17,7 @@ router.get('/login', controller.checkNotAuthenticated, controller.getLogin);
 
 router.get('/register', controller.checkNotAuthenticated, controller.getSignin);
 
-router.get('/', controller.checkSessionID, controller.checkAuthenticated, controller.getIndex);
+router.get('/', controller.checkSessionID, controller.checkAuthenticated, controller.getSearch);
 
 router.get('/playlists/:username', controller.getPlaylistsDynamic);
 

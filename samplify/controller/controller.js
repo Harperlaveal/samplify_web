@@ -168,7 +168,7 @@ exports.getPlaylistsDynamic = async (req,res) => {
         res.render('dynamic-list',{'samples': samples, 'username':req.params.username,'title':title, 'description':desc});
     }
     else{
-        res.redirect('/search');
+        res.redirect('/oops');
     }
 
     
