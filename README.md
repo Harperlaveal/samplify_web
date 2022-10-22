@@ -10,7 +10,7 @@ Using Web application:
 The playlists page is where songs can be added to your own playlists. You can update playlist information on this page (name and description) as well as delete samples. 
 The profile page has your email and username, and the option to log out.
 
-**Our heroku hosting is using another GitLab project as we were not able to change the pipeline. We can provide evidence of this. Our website is hosted here: i-samplify.herokuapp.com**
+**Our heroku hosting is using another GitLab project as we were not able to change the pipeline. We were still able host our project before the due date, we can provide evidence of this. Our website is hosted here:** "https://i-samplify.herokuapp.com"
 
 **REST API:**
 To update you're playlist you must know your uid
