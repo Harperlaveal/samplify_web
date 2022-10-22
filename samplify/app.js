@@ -20,7 +20,7 @@ app.use(express.json())
 app.use(flash());
 app.use(session({
   name: "sid",
-  secret: process.env.SESSION_SECRET,
+  secret: "secret",
   resave: false,
   saveUninitialized: false,
   rolling: true,
