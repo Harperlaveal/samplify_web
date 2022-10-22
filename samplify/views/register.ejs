@@ -43,6 +43,9 @@
         <div id="Profile" class="page">
           <div id="login-container">
               <form action='/register' onsubmit = "validateSignupForm()" method="POST" id="login-form">
+                <% if(bad==true) {%>
+                    <div id="errorMsg">Password must be longer than 8 characters</div>
+                <% } %>
                 <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username" required>
                 <input type="text" name="email" id="email-field" class="login-form-field" placeholder="Email" required>
                 <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password" required>

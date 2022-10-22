@@ -90,7 +90,7 @@ exports.getLogin = (req,res) => {
 }
 
 exports.getSignin = (req,res) => {
-    res.render('register',{'pageTitle':'Signin'});
+    res.render('register',{'bad':false});
 }
 
 exports.getSignedOut = (req, res) => {
@@ -134,7 +134,13 @@ exports.postRegister = async (req,res) => {
             userid: userid,
             samples: [],
         });
-        return res.redirect('/login');
+        if (req.body.password.length < 8) {
+            return res.render('register',{'bad':true});
+        }
+        else {
+            return res.redirect('/login');
+        }
+        
     } catch {
         return res.redirect('/register');
     }
