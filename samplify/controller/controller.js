@@ -92,8 +92,6 @@ exports.getSignin = (req,res) => {
     res.render('register',{'pageTitle':'Signin'});
 }
 
-
-
 exports.postLogin = async (req,res) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -163,4 +161,94 @@ exports.getPlaylistsDynamic = async (req,res) => {
     }
 
     
+}
+
+exports.postSearch = async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.cookies.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
+            samples:FieldValue.arrayUnion(req.body),
+        });
+
+        res.redirect('/search');
+    }
+    catch{
+        res.redirect('/login');
+    }
+}
+
+exports.postJson = async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.body.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
+            title: req.body.title,
+            description: req.body.desc
+        });
+        res.status(201).json({ status: 'updating', message: 'tried to update data' });
+    } catch {
+        res.status(401).json({ status: 'failure', message: 'Data Not Added.' });
+    }
+}
+
+exports.postEditPlaylist = async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.cookies.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
+            title: req.body.title,
+            description: req.body.desc
+        });
+        
+        res.redirect('/playlists');
+    }
+    catch{
+        res.redirect('/profile');
+    }
+}
+
+exports.postClearPlaylist = async (req,res) => {
+    try{
+        const userdoc = await users.doc(req.cookies.uid).get();
+        const plid = userdoc.data().plid;
+        await db.collection('playlists').doc(plid).update({
+            samples: []
+        });
+        
+        res.redirect('/playlists');
+    }
+    catch{
+        res.redirect('/profile');
+    }
+}
+
+exports.checkAuthenticated = async (req, res, next) => {
+    if (await checkCookie(req) ) {
+        return next();
+    }
+    res.redirect('/login');
+}
+
+exports.checkNotAuthenticated = async (req, res, next) => {
+    if (await checkCookie(req)){
+        return res.redirect('/');
+    }
+    next();
+}
+
+/**
+ * Method to check if a response contains a valid cookie
+ */
+ async function checkCookie(req) {
+    let check = false;
+    await users.get().then(querySnapshot => {
+
+    querySnapshot.forEach((doc) => {
+        if(doc.id == req.cookies.uid) {
+            check = true;
+            }
+        })
+    })
+    return check;
 }

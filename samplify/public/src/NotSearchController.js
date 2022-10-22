@@ -15,7 +15,7 @@ function bindEvents(){
         }
     });
     document.querySelector('#search').addEventListener('click', getSamplesFromSong);
-    document.querySelector('##search-playlist').addEventListener('keypress', function (e) {
+    document.querySelector('#search-user-i').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             getPlaylistPage();
         }
