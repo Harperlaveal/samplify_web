@@ -14,6 +14,7 @@
   <script type="module" src="src/PlaylistController.js"></script>
   <script type="module" src="src/LoginController.js"></script>
   <script src="src/SearchController.js"></script>
+  <script src="src/PlaylistSearchController.js"></script>
   <script src="src/PlaylistObject.js"></script>
   <script src="src/PlaylistOperations.js"></script>
   <script src="src/SampleObject.js"></script>
@@ -25,6 +26,17 @@
         <div class='header'>
             <h1 class='header-text' style="text-transform:capitalize;"><%= username +'\'s samplify' + ' ' %><i class="fa fa-music"></i></h1>
         </div>
+
+        <nav class="navbar navbar-expand-sm bg-light">
+          <div class="container-fluid">
+            <ul class="navbar-nav">
+            </ul>
+            <div class='search-play-row'>
+              <input id='search-user-i'  class='search-play-i' placeholder='Search user' type="text">
+              <button id='search-playlist' class="btn btn-outline-secondary" type="search"><i class="fa fa-search"></i></button>
+          </div>
+          </div>
+        </nav>
     
         <div id="Playlists" class="page">
           <div class='play-container'>

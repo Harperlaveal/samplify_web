@@ -15,17 +15,6 @@ function bindEvents(){
         }
     });
     document.querySelector('#search').addEventListener('click', getSamplesFromSong);
-    document.querySelector('#search-user-i').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            getPlaylistPage();
-        }
-    });
-    document.querySelector('#search-playlist').addEventListener('click', getPlaylistPage);
-}
-
-async function getPlaylistPage(){
-    let search = document.getElementById("search-user-i").value;
-    window.location.replace('/playlists/' + search);
 }
 
 async function getSamplesFromSong(){
