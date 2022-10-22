@@ -4,11 +4,6 @@ const playlists=db.collection('playlists');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 const { FieldValue } = require('firebase-admin/firestore');
-const { json } = require('express');
-
-exports.getIndex = (req,res)=>{
-    res.render('index');
-}
 
 exports.getSearch = (req,res) =>{
     res.render('search');
@@ -17,7 +12,6 @@ exports.getSearch = (req,res) =>{
 exports.unauthSearch = (req,res) =>{
     res.render('not-search');
 }
-
 
 exports.getPlaylists = async (req,res) => {
     try{
