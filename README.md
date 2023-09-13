@@ -1,5 +1,3 @@
-# NWEN304
-
 a) 
 Using Web application: 
  Run npm install in project terminal, then run application with npm start.
